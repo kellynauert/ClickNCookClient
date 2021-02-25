@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
 import './App.css';
+import Navbar from './components/UI/Navbar';
+import React, { useState, useEffect } from 'react';
 import RecipeIndex from './user/RecipeIndex';
 import Sitebar from './home/Navbar';
 import Auth from './auth/Auth';
@@ -36,6 +37,8 @@ function App() {
     <>
       <Sitebar clearToken={clearToken} />
       {protectedViews()}
+      			<Navbar />
+
     </>
   );
 }
