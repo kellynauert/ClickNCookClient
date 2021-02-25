@@ -11,6 +11,9 @@ const useStyles = makeStyles({
     paddingRight: '25px',
     paddingTop: '10px',
   },
+  text: {
+    textAlign: 'center',
+  },
 });
 
 const ReceipeIndex = (props) => {
@@ -54,6 +57,10 @@ const ReceipeIndex = (props) => {
   return (
     <div>
       <RecipeCreate fetchRecipes={fetchRecipes} token={props.token} />
+      <Grid>
+        <h1 className={classes.text}>Chef's Page</h1>
+      </Grid>
+      <hr />
       <Grid
         container
         spacing={4}
