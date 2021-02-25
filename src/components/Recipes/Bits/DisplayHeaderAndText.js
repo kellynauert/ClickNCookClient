@@ -11,7 +11,7 @@ function DisplayHeaderAndText(props) {
 				</Typography>
 			</Grid>
 			<Grid item>
-				<Typography variant='body1' color='textSecondary'>
+				<Typography variant='body1' color='textPrimary'>
 					{props.value}
 				</Typography>
 			</Grid>

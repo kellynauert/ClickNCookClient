@@ -17,12 +17,10 @@ const StopWatchApp = (props) => {
 
 	useEffect(() => {
 		setStartTime(props.cookTime * 1000 * 60);
-		console.log(time);
 		if (!time || time < 0) {
 			setTime(props.cookTime * 1000 * 60);
-			console.log(time);
 		}
-	});
+	}, [props.cookTime]);
 
 	useEffect(() => {
 		if (isRunning) {

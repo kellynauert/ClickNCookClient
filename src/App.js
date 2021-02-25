@@ -1,10 +1,9 @@
 import './App.css';
-import SingleRecipe from './components/Recipes/SingleRecipe';
-
+import Navbar from './components/UI/Navbar';
 function App() {
 	return (
 		<>
-			<SingleRecipe recipeID={1} />
+			<Navbar />
 		</>
 	);
 }
