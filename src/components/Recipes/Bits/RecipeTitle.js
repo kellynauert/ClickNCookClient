@@ -1,7 +1,13 @@
 import { Grid, Chip, Box, Typography } from '@material-ui/core';
 import Icon from '@mdi/react';
 import { spacing } from '@material-ui/system';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import {
+	BrowserRouter as Router,
+	Switch,
+	Route,
+	Link,
+	useRouteMatch,
+} from 'react-router-dom';
 
 import { mdiCupcake, mdiHamburger, mdiPizza, mdiCoffee } from '@mdi/js';
 import React, { useEffect, useState } from 'react';
@@ -19,13 +25,6 @@ function RecipeTitle(props) {
 		}
 	}, [props.category]);
 
-	function ChefRecipes() {
-		return (
-			<Typography variant='h2' color='textPrimary'>
-				Chef Recipes
-			</Typography>
-		);
-	}
 	return (
 		<Grid container direction='row' className='RecipeHeaderBits'>
 			<Box>
@@ -41,7 +40,7 @@ function RecipeTitle(props) {
 				</Grid>
 				<Box className='username'>
 					<Link
-						to='/chefrecipes'
+						to={'/chefrecipes'}
 						style={{ color: 'white', textDecoration: 'none' }}
 					>
 						<Typography variant='subtitle1' color='textSecondary'>
@@ -50,11 +49,6 @@ function RecipeTitle(props) {
 					</Link>
 				</Box>
 			</Box>
-			<Switch>
-				<Route path='/chefrecipes'>
-					<ChefRecipes />
-				</Route>
-			</Switch>
 		</Grid>
 	);
 }

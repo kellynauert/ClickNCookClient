@@ -33,7 +33,6 @@ function SingleRecipe(props) {
 				setRecipe(recipe.recipes[0]);
 			});
 	}
-
 	return (
 		<Grid container direction='row' spacing={4}>
 			<Grid item xs={5}>

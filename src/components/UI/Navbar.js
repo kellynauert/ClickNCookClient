@@ -27,6 +27,7 @@ export default function NavBar() {
 	function SingleRecipePath() {
 		return <SingleRecipe recipeID={1} />;
 	}
+
 	function ChefRecipes() {
 		return (
 			<Typography variant='h2' color='textPrimary'>
@@ -71,7 +72,7 @@ export default function NavBar() {
 							marginLeft={12}
 						>
 							<Box justifySelf='right'>
-								<Link to='//#endregion' color='inherit' variant='subtitle1'>
+								<Link to='#' style={{ color: 'white', textDecoration: 'none' }}>
 									<Typography variant='subtitle1'>Log Out</Typography>
 								</Link>
 							</Box>
