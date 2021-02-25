@@ -1,7 +1,12 @@
 import './App.css';
+import SingleRecipe from './components/Recipes/SingleRecipe';
 
 function App() {
-	return <div className='App'></div>;
+	return (
+		<>
+			<SingleRecipe recipeID={1} />
+		</>
+	);
 }
 
 export default App;
