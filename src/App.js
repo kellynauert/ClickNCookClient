@@ -1,8 +1,12 @@
+
+
 import './App.css';
 import Navbar from './components/UI/Navbar';
 import React, { useState, useEffect } from 'react';
 import Auth from './components/Auth/Auth';
 import Sitebar from './home/Navbar';
+import AllRecipes from './components/Recipes/Allrecipes'
+
 
 function App() {
 	const [sessionToken, setSessionToken] = useState('');

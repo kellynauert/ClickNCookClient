@@ -3,16 +3,17 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import SingleRecipe from '../Recipes/SingleRecipe';
 import { AppBar, Box, Toolbar, Typography } from '@material-ui/core';
 import { spacing } from '@material-ui/system';
+import AllRecipes from '../Recipes/Allrecipes'
 import Auth from '../Auth/Auth';
 import RecipeIndex from '../../user/RecipeIndex';
+
 export default function NavBar(props) {
+
 	function Home() {
 		return (
 			<>
-				<Typography variant='h2' color='textPrimary'>
-					All Recipes
-				</Typography>
-				<Link to='/singlerecipe'>Single Recipe</Link>
+				<AllRecipes />
+				<Link to='/singlerecipe'>All Recipes</Link>
 			</>
 		);
 	}
