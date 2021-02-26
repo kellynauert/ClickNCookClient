@@ -6,7 +6,7 @@ import React, { useState, useEffect } from 'react';
 import RecipeIndex from './user/RecipeIndex';
 import Sitebar from './home/Navbar';
 import Auth from './auth/Auth';
-import AllRecipes from './components/Allrecipes'
+import AllRecipes from './components/Recipes/Allrecipes'
 
 function App() {
   const [sessionToken, setSessionToken] = useState('');

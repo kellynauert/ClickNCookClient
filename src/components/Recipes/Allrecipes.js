@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import { Table, Button } from 'reactstrap';
 
 function AllRecipes(props) {
             
@@ -10,20 +9,21 @@ function AllRecipes(props) {
         }, []);
             
         function getAllRecipes() {
-            fetch(`http://localhost:3000/recipe/${recipe.id}` /* <-- revise this URL */, {
+            fetch(`http://localhost:3000/recipe/`, {
                 method: 'GET',
                 headers: new Headers({
                 'Content-Type': 'application/json',
             }),
         })
         .then((res) => res.json())
-        .then((resipe) => {
-            setRecipe(recipe.recipes[0]);
+        .then((res) => {
+            setRecipe(res.recipes);
         });
     }
 
     return (
         <>
+        {/* Some stuff */}
         </>
     )
 }
