@@ -3,8 +3,9 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import SingleRecipe from '../Recipes/SingleRecipe';
 import { AppBar, Box, Toolbar, Typography } from '@material-ui/core';
 import { spacing } from '@material-ui/system';
-
-export default function NavBar() {
+import Auth from '../Auth/Auth';
+import RecipeIndex from '../../user/RecipeIndex';
+export default function NavBar(props) {
 	function Home() {
 		return (
 			<>
@@ -17,31 +18,36 @@ export default function NavBar() {
 	}
 
 	function MyRecipes() {
-		return (
-			<Typography variant='h2' color='textPrimary'>
-				My Recipes
-			</Typography>
-		);
+		return <RecipeIndex token={props.sessionToken} />;
+		// <>{protectedViews()}</>;
 	}
 
 	function SingleRecipePath() {
 		return <SingleRecipe recipeID={1} />;
 	}
-
-	function ChefRecipes() {
-		return (
-			<Typography variant='h2' color='textPrimary'>
-				Chef Recipes
-			</Typography>
-		);
+	function AuthPath() {
+		return <Auth token={props.sessionToken} updateToken={props.updateToken} />;
 	}
+	function ChefRecipes() {
+		return null;
+	}
+	const protectedViews = () => {
+		return props.sessionToken === localStorage.getItem('token') ? (
+			<RecipeIndex token={props.sessionToken} />
+		) : (
+			<Auth token={props.sessionToken} updateToken={props.updateToken} />
+		);
+	};
 	return (
 		<Router>
 			<AppBar position='sticky' style={{ width: '100vw' }}>
 				<Box className='container'>
 					<Toolbar style={{ padding: '0' }}>
 						<Box>
-							<Link to='/' style={{ color: 'white', textDecoration: 'none' }}>
+							<Link
+								to='/home'
+								style={{ color: 'white', textDecoration: 'none' }}
+							>
 								<Typography variant='h6'>ClickNCook</Typography>
 							</Link>
 						</Box>
@@ -52,7 +58,10 @@ export default function NavBar() {
 							marginLeft={12}
 						>
 							<Box marginRight={4}>
-								<Link to='/' style={{ color: 'white', textDecoration: 'none' }}>
+								<Link
+									to='/home'
+									style={{ color: 'white', textDecoration: 'none' }}
+								>
 									<Typography variant='subtitle1'>Explore Recipes</Typography>
 								</Link>
 							</Box>
@@ -64,6 +73,14 @@ export default function NavBar() {
 									<Typography variant='subtitle1'>My Recipes</Typography>
 								</Link>
 							</Box>
+							<Box>
+								<Link
+									to='/chefrecipes'
+									style={{ color: 'white', textDecoration: 'none' }}
+								>
+									<Typography variant='subtitle1'>Chef Recipes</Typography>
+								</Link>
+							</Box>
 						</Box>
 						<Box
 							width='100%'
@@ -72,8 +89,12 @@ export default function NavBar() {
 							marginLeft={12}
 						>
 							<Box justifySelf='right'>
-								<Link to='#' style={{ color: 'white', textDecoration: 'none' }}>
-									<Typography variant='subtitle1'>Log Out</Typography>
+								<Link
+									onClick={props.clearToken}
+									to='/auth'
+									style={{ color: 'white', textDecoration: 'none' }}
+								>
+									<Typography variant='subtitle1'>Auth</Typography>
 								</Link>
 							</Box>
 						</Box>
@@ -89,11 +110,14 @@ export default function NavBar() {
 					<Route path='/singlerecipe'>
 						<SingleRecipePath />
 					</Route>
-					<Route path='/'>
+					<Route path='/home'>
 						<Home />
 					</Route>
 					<Route path='/chefrecipes'>
 						<ChefRecipes />
+					</Route>
+					<Route path='/auth'>
+						<AuthPath />
 					</Route>
 				</Switch>
 			</Box>
