@@ -35,14 +35,12 @@ function AllRecipes() {
 			return (
 				<Grid item md={4} key={index}>
 					<Card key={index}>
-						<Box display='flex'>
-							<Box>Views {recipe.views}</Box>
-						</Box>
 						<CardHeader
 							title={recipe.recipe_name}
 							subheader={recipe.category}
 						/>
 						<CardContent>
+							<Typography variant='subtitle2'>Views {recipe.views}</Typography>
 							<Typography>
 								Cook Time: {recipe.cook_time}
 								<br />
