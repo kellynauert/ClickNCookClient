@@ -88,7 +88,7 @@ const ReceipeIndex = (props) => {
         <></>
       )}
       <Grid>
-        <h1 className={classes.text}>Chef's Page</h1>
+        <h1 className={classes.text}>My Recipes</h1>
       </Grid>
       <hr />
       <Grid

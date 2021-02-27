@@ -139,7 +139,7 @@ const RecipeCard = (props) => {
     });
   };
 
-  return <>{recipeMapper()}</>;
+  return <div>{recipeMapper()}</div>;
 };
 
 export default RecipeCard;
