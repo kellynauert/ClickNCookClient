@@ -11,6 +11,8 @@ import {
 } from '@material-ui/core';
 import { spacing } from '@material-ui/system';
 import Auth from '../auth/Auth';
+import Login from '../auth/Login';
+import Signup from '../auth/Signup';
 import RecipeIndex from '../../user/RecipeIndex';
 import AllRecipes from '../Recipes/Allrecipes';
 
@@ -47,20 +49,26 @@ export default function NavBar(props) {
       <Auth token={props.sessionToken} updateToken={props.updateToken} />
     );
   };
-  const [open, setOpen] = useState(false);
+  const [openSignup, setOpenSignup] = useState(false);
+  const [openLogin, setOpenLogin] = useState(false);
   const [buttonText, setButtonText] = useState('Login');
-  const handleOpen = () => {
+  const handleOpenLogin = () => {
     if (buttonText === 'Logout') {
       props.logout();
       setButtonText('Login');
       return null;
     }
-    setOpen(true);
+    setOpenLogin(true);
     setButtonText('Login');
   };
 
+  const handleOpenSignup = () => {
+    setOpenSignup(true);
+  };
+
   const handleClose = () => {
-    setOpen(false);
+    setOpenLogin(false);
+    setOpenSignup(false);
     setButtonText('Logout');
   };
 
@@ -111,17 +119,28 @@ export default function NavBar(props) {
               <Box justifySelf="right">
                 <Button
                   type="button"
-                  onClick={handleOpen}
+                  onClick={handleOpenLogin}
                   style={{ color: 'white', textDecoration: 'none' }}
                 >
                   <Typography variant="subtitle1">{buttonText}</Typography>
                 </Button>
+                <Modal open={openLogin} onBackdropClick={handleClose}>
+                  <Login token={props.token} updateToken={props.updateToken} />
+                </Modal>
+              </Box>
+            </Box>
+            <Box>
+              <Box justifySelf="right">
+                <Button
+                  type="button"
+                  onClick={handleOpenSignup}
+                  style={{ color: 'white', textDecoration: 'none' }}
+                >
+                  <Typography variant="subtitle1">Signup</Typography>
+                </Button>
 
-                <Modal open={open} onDoubleClick={handleClose}>
-                  <Auth
-                    token={props.sessionToken}
-                    updateToken={props.updateToken}
-                  />
+                <Modal open={openSignup} onBackdropClick={handleClose}>
+                  <Signup token={props.token} updateToken={props.updateToken} />
                 </Modal>
               </Box>
             </Box>
