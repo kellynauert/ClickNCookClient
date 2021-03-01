@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -49,7 +49,8 @@ const useStyles = makeStyles((theme) => ({
 
 const RecipeCard = (props) => {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = useState(false);
+  const [recipes, setRecipes] = useState([]);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -65,8 +66,22 @@ const RecipeCard = (props) => {
     }).then(() => props.fetchRecipes());
   };
 
+  const filterRecipes = () => {
+    if (props.category === '') {
+      setRecipes(props.recipes);
+    } else {
+      setRecipes(
+        props.recipes.filter((recipe) => props.category === recipe.category)
+      );
+    }
+  };
+
+  useEffect(() => {
+    filterRecipes();
+  });
+
   const recipeMapper = () => {
-    return props.recipes.map((recipe, index) => {
+    return recipes.map((recipe, index) => {
       return (
         <Grid item md={4} key={index}>
           <Card className={classes.root} key={index}>
