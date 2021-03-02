@@ -78,7 +78,7 @@ const RecipeCard = (props) => {
 
   useEffect(() => {
     filterRecipes();
-  });
+  }, [props.category]);
 
   const recipeMapper = () => {
     return recipes.map((recipe, index) => {
