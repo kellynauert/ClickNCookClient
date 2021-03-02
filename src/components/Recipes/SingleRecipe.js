@@ -9,18 +9,11 @@ import { spacing } from '@material-ui/system';
 
 function SingleRecipe(props) {
 	const [recipe, setRecipe] = useState('');
-	const [image, setImage] = useState(
-		'http://miro.medium.com/max/1080/0*DqHGYPBA-ANwsma2.gif'
-	);
+
 	useEffect(() => {
 		fetchRecipes();
 	}, []);
 
-	useEffect(() => {
-		if (recipe.photo_url !== undefined) {
-			setImage(recipe.photo_url);
-		}
-	}, [recipe.photo_url]);
 	function fetchRecipes() {
 		fetch(`http://localhost:3000/recipe/id/${props.recipeID}`, {
 			method: 'GET',
@@ -29,10 +22,20 @@ function SingleRecipe(props) {
 			},
 		})
 			.then((res) => res.json())
-			.then((recipe) => {
-				setRecipe(recipe.recipes[0]);
+			.then((res) => {
+				console.log(res);
+				setRecipe(res.recipes[0]);
 			});
 	}
+
+	const [image, setImage] = useState(
+		'http://miro.medium.com/max/1080/0*DqHGYPBA-ANwsma2.gif'
+	);
+	useEffect(() => {
+		if (recipe.photo_url !== undefined) {
+			setImage(recipe.photo_url);
+		}
+	}, [recipe.photo_url]);
 	return (
 		<Grid container direction='row' spacing={4}>
 			<Grid item xs={5}>

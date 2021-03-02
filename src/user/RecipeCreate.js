@@ -47,6 +47,7 @@ const RecipeCreate = (props) => {
   const [cookTime, setCookTime] = useState(0);
   const [servings, setServings] = useState(0);
   const [views, setViews] = useState(0);
+  const [imgUrl, setImgUrl] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -61,6 +62,7 @@ const RecipeCreate = (props) => {
           cook_time: cookTime,
           servings: servings,
           views: views,
+          photo_url: imgUrl,
         },
       }),
       headers: new Headers({
@@ -78,6 +80,8 @@ const RecipeCreate = (props) => {
         setDirections('');
         setCookTime(0);
         setServings(0);
+        setViews(0);
+        setImgUrl('');
         props.fetchRecipes();
       });
   };
@@ -147,14 +151,13 @@ const RecipeCreate = (props) => {
             <br />
             <Grid item xs={12}>
               <TextareaAutosize
-                rowsMin={4}
-                rowsMax={8}
+                rowsMin={5}
+                rowsMax={10}
                 variant="outlined"
                 required
                 fullWidth
                 id="directions"
-                placeholder="Directions"
-                autoFocus
+                placeholder="Directions*"
                 value={directions}
                 onChange={(e) => setDirections(e.target.value)}
               />
@@ -185,6 +188,18 @@ const RecipeCreate = (props) => {
                 autoFocus
                 value={servings}
                 onChange={(e) => setServings(e.target.value)}
+              />
+            </Grid>
+            <br />
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                fullWidth
+                id="image"
+                label="Image URL"
+                helperText="Enter URL of image"
+                value={imgUrl}
+                onChange={(e) => setImgUrl(e.target.value)}
               />
             </Grid>
             <Button

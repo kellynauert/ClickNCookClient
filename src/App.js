@@ -1,9 +1,10 @@
 import './App.css';
 import Navbar from './components/UI/Navbar';
 import React, { useState, useEffect } from 'react';
-import RecipeIndex from './user/RecipeIndex';
+//import Auth from './components/auth/Auth';
 import Sitebar from './home/Navbar';
-import Auth from './auth/Auth';
+import AllRecipes from './components/Recipes/Allrecipes';
+import RecipeIndex from './user/RecipeIndex';
 
 function App() {
   const [sessionToken, setSessionToken] = useState('');
@@ -25,20 +26,13 @@ function App() {
     setSessionToken('');
   };
 
-  const protectedViews = () => {
-    return sessionToken === localStorage.getItem('token') ? (
-      <RecipeIndex token={sessionToken} />
-    ) : (
-      <Auth updateToken={updateToken} />
-    );
-  };
-
   return (
     <>
-      <Sitebar clearToken={clearToken} />
-      {protectedViews()}
-      			<Navbar />
-
+      <Navbar
+        token={sessionToken}
+        updateToken={updateToken}
+        logout={clearToken}
+      />
     </>
   );
 }
