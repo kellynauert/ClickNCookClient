@@ -1,5 +1,5 @@
 import { Grid, Chip, Box, Typography } from '@material-ui/core';
-import Icon from '@mdi/react';
+import  Icon from '@mdi/react';
 import { spacing } from '@material-ui/system';
 import {
 	BrowserRouter as Router,
