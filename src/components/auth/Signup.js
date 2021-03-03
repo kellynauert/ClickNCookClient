@@ -39,7 +39,7 @@ const Signup = (props) => {
 			<br />
 
 			<Grid container spacing={12} justify='center' direction='row'>
-				<Grid item>
+				<Grid item xs={3}>
 					<Grid
 						container
 						direction='column'
@@ -49,12 +49,14 @@ const Signup = (props) => {
 					>
 						<Paper
 							variant='elevation'
-							elevation={2}
+							elevation={3}
 							className='login-background'
 						>
-							<Grid item>
-								<Typography component='h1' variant='h5'>
-									Sign Up
+							<Grid item spacing={6}>
+								<Typography component='h1' variant='h5' align='center'>
+                                 <br></br>
+									       Sign Up for ClickNCook
+                                          
 								</Typography>
 							</Grid>
 							<Grid item>
@@ -100,20 +102,16 @@ const Signup = (props) => {
 										<Grid item>
 											<Button
 												variant='contained'
-												color='black'
+												color= '#FF8F00'
 												type='submit'
 												className='button-block'
+                                                
 											>
 												Signup
 											</Button>
 										</Grid>
 									</Grid>
 								</form>
-							</Grid>
-							<Grid item>
-								{/* <Link href="#" variant="body2">
-Forgot Password?
-</Link> */}
 							</Grid>
 						</Paper>
 					</Grid>
