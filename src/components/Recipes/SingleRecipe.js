@@ -13,8 +13,9 @@ function SingleRecipe(props) {
 	useEffect(() => {
 		fetchRecipes();
 	}, []);
-
 	function fetchRecipes() {
+		console.log(props);
+
 		fetch(`http://localhost:3000/recipe/id/${props.recipeID}`, {
 			method: 'GET',
 			headers: {
@@ -52,11 +53,11 @@ function SingleRecipe(props) {
 				</Card>
 			</Grid>
 
-			<Grid item xs={6}>
+			<Grid item xs={7}>
 				<Box>
 					<RecipeTitle
 						recipeName={recipe.recipe_name}
-						creator={recipe.chef}
+						chef={recipe.chef}
 						category={recipe.category}
 					/>
 				</Box>

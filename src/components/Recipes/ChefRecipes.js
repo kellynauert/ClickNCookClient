@@ -1,37 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import {
+	Card,
+	CardHeader,
+	CardContent,
 	Typography,
 	Box,
 	Grid,
 	MenuItem,
 	makeStyles,
 	TextField,
-  Button,
 } from '@material-ui/core/';
 import RecipeCard from './Bits/RecipeCard';
-import StarRateIcon from '@material-ui/icons/StarRate';
 const useStyles = makeStyles({
 	filter: {
 		width: '190px',
 	},
 });
 
+function ChefRecipes(props) {
+	const classes = useStyles();
+	let [recipe, setRecipe] = useState([]);
+	const [filterCategory, setFilterCategory] = useState('');
 
-
-function AllRecipes() {
-  const classes = useStyles();
-  const [recipe, setRecipe] = useState([]);
-  const [spicy, setSpicy] = useState(false);
-  const [filterCategory, setFilterCategory] = useState('');
-
-
-  useEffect(() => {
-    getAllRecipes();
-    // console.log(recipe);
-  }, []);
+	useEffect(() => {
+		getAllRecipes();
+		console.log(recipe);
+	}, []);
 
 	function getAllRecipes() {
-		fetch(`http://localhost:3000/recipe/`, {
+		fetch(`http://localhost:3000/recipe/${props.chef}`, {
 			method: 'GET',
 			headers: new Headers({
 				'Content-Type': 'application/json',
@@ -54,37 +51,6 @@ function AllRecipes() {
 			});
 	};
 
-  function compare(a, b) {
-    // console.log(recipe)
-  
-    const recipeA = a.views
-    const recipeB = b.views
-  
-    let comparison = 0
-    if (recipeA > recipeB) {
-        comparison = 1
-      } else if (recipeA < recipeB) {
-          comparison = -1
-        }
-        // console.log(comparison)
-        return comparison * -1
-      
-      }
-      
-function sortByViews() {
-// debugger
-let RecipeObject = [...recipe];
-let recipeSort = RecipeObject.sort(compare)
-console.log(recipeSort)
-setRecipe (recipeSort)
-}
-
-useEffect(() => {
-if (spicy) {
-  sortByViews();
-}
-}, [spicy]);
-
 	return (
 		<div>
 			<Box
@@ -95,7 +61,7 @@ if (spicy) {
 			>
 				<Box>
 					<Typography variant='h2' color='textPrimary'>
-						All Recipes
+						{props.chef}'s Recipes
 					</Typography>
 				</Box>
 				<Box>
@@ -115,17 +81,6 @@ if (spicy) {
 						<MenuItem value='dessert'>Dessert</MenuItem>
 					</TextField>
 				</Box>
-
-        {/* ###  Sort By Views Button  ### */}
-        <Button 
-        variant="outlined"
-        color="secondary"
-        className={classes.button}
-        startIcon={<StarRateIcon />}
-        onClick={() => setSpicy(!spicy)}
-        >Spicy Recipes
-        </Button>
-
 			</Box>
 			<Grid container direction='row' spacing={2}>
 				{RecipeMapper()}
@@ -134,4 +89,4 @@ if (spicy) {
 	);
 }
 
-export default AllRecipes;
+export default ChefRecipes;
