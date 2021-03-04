@@ -50,6 +50,9 @@ h4 {
 }
 
 .container {
-	width: 60%;
-	margin-left: 20%;
+	width: 70vw;
+	margin-left: 15vw;
+}
+.MuiAppBar-colorPrimary {
+	background-color: #ff8f00;
 }

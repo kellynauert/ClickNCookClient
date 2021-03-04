@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import {
+	Card,
+	CardHeader,
+	CardContent,
 	Typography,
 	Box,
 	Grid,
@@ -14,7 +17,7 @@ const useStyles = makeStyles({
 	},
 });
 
-function AllRecipes() {
+function ChefRecipes(props) {
 	const classes = useStyles();
 	let [recipe, setRecipe] = useState([]);
 	const [filterCategory, setFilterCategory] = useState('');
@@ -25,7 +28,7 @@ function AllRecipes() {
 	}, []);
 
 	function getAllRecipes() {
-		fetch(`http://localhost:3000/recipe/`, {
+		fetch(`http://localhost:3000/recipe/${props.chef}`, {
 			method: 'GET',
 			headers: new Headers({
 				'Content-Type': 'application/json',
@@ -58,7 +61,7 @@ function AllRecipes() {
 			>
 				<Box>
 					<Typography variant='h2' color='textPrimary'>
-						All Recipes
+						{props.chef}'s Recipes
 					</Typography>
 				</Box>
 				<Box>
@@ -86,4 +89,4 @@ function AllRecipes() {
 	);
 }
 
-export default AllRecipes;
+export default ChefRecipes;

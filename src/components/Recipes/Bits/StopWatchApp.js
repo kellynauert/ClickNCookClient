@@ -78,6 +78,7 @@ const StopWatchApp = (props) => {
 						<Button
 							startIcon={<TimerRounded />}
 							color='secondary'
+							style={{ backgroundColor: '#FF8F00' }}
 							variant='contained'
 							onClick={start}
 						>
