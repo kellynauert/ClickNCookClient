@@ -1,13 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Collapse from '@material-ui/core/Collapse';
-import IconButton from '@material-ui/core/IconButton';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
@@ -29,18 +24,9 @@ const useStyles = makeStyles((theme) => ({
   pos: {
     marginBottom: 12,
   },
-  expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)',
-  },
   btn: {
     width: '30%',
+    marginLeft: '38px',
   },
   position: {
     margin: '15px 20px',
@@ -49,12 +35,6 @@ const useStyles = makeStyles((theme) => ({
 
 const RecipeCard = (props) => {
   const classes = useStyles();
-  const [expanded, setExpanded] = useState(false);
-  const [recipes, setRecipes] = useState([]);
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
 
   const deleteRecipe = (recipe) => {
     fetch(`http://localhost:3000/recipe/delete/${recipe.id}`, {
@@ -66,28 +46,15 @@ const RecipeCard = (props) => {
     }).then(() => props.fetchRecipes());
   };
 
-  const filterRecipes = () => {
-    if (props.category === '') {
-      setRecipes(props.recipes);
-    } else {
-      setRecipes(
-        props.recipes.filter((recipe) => props.category === recipe.category)
-      );
-    }
-  };
-
-  useEffect(() => {
-    filterRecipes();
-  }, [props.category]);
-
   const recipeMapper = () => {
-    return recipes.map((recipe, index) => {
+    return props.recipes.map((recipe, index) => {
       return (
         <Grid item md={4} key={index}>
           <Card className={classes.root} key={index}>
             <Box display="flex">
               <Box className={classes.position}>Views {recipe.views}</Box>
             </Box>
+            <img src={recipe.photo_url} alt="" />
             <CardHeader
               title={recipe.recipe_name}
               subheader={recipe.category}
@@ -111,43 +78,29 @@ const RecipeCard = (props) => {
                 Serves: {recipe.servings}
               </Typography>
             </CardContent>
-            <CardActions>
-              <IconButton
-                className={clsx(classes.expand, {
-                  [classes.expandOpen]: expanded,
-                })}
-                onClick={handleExpandClick}
-                aria-expanded={expanded}
-                aria-label="show more"
-              >
-                <ExpandMoreIcon />
-              </IconButton>
-            </CardActions>
-            <Collapse in={expanded} timeout="auto" unmountOnExit>
-              <Button
-                className={classes.btn}
-                color="primary"
-                variant="contained"
-                onClick={() => {
-                  props.editUpdateRecipe(recipe);
-                  props.updateOn();
-                }}
-              >
-                Edit
-              </Button>
+            <Button
+              className={classes.btn}
+              color="primary"
+              variant="outlined"
+              onClick={() => {
+                props.editUpdateRecipe(recipe);
+                props.updateOn();
+              }}
+            >
+              Edit
+            </Button>
 
-              <Button
-                className={classes.btn}
-                color="secondary"
-                variant="contained"
-                startIcon={<DeleteIcon />}
-                onClick={() => {
-                  deleteRecipe(recipe);
-                }}
-              >
-                Delete
-              </Button>
-            </Collapse>
+            <Button
+              className={classes.btn}
+              color="secondary"
+              variant="outlined"
+              startIcon={<DeleteIcon />}
+              onClick={() => {
+                deleteRecipe(recipe);
+              }}
+            >
+              Delete
+            </Button>
           </Card>
         </Grid>
       );

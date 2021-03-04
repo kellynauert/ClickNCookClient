@@ -142,7 +142,7 @@ const RecipeCreate = (props) => {
                 fullWidth
                 id="ingredients"
                 label="Ingredients"
-                helperText="Seperate ingredients with a ,"
+                helperText="Seperate ingredients with a , and after last ingredient"
                 autoFocus
                 value={ingredient}
                 onChange={split}
