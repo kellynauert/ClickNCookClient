@@ -9,7 +9,11 @@ import {
   MenuItem,
   makeStyles,
   TextField,
+  Button,
+  TableSortLabel,
 } from '@material-ui/core/';
+import StarRateIcon from '@material-ui/icons/StarRate';
+// import sortByViews from './Bits/SortButton'
 
 const useStyles = makeStyles({
   filter: {
@@ -17,14 +21,18 @@ const useStyles = makeStyles({
   },
 });
 
+
+
 function AllRecipes() {
   const classes = useStyles();
-  let [recipe, setRecipe] = useState([]);
+  const [recipe, setRecipe] = useState([]);
+  const [spicy, setSpicy] = useState(false);
   const [filterCategory, setFilterCategory] = useState('');
+
 
   useEffect(() => {
     getAllRecipes();
-    console.log(recipe);
+    // console.log(recipe);
   }, []);
 
   function getAllRecipes() {
@@ -40,6 +48,7 @@ function AllRecipes() {
         console.log(recipe);
       });
   }
+
 
   const RecipeMapper = () => {
     return recipe
@@ -70,8 +79,42 @@ function AllRecipes() {
       });
   };
 
+
+  
+  function compare(a, b) {
+      // console.log(recipe)
+    
+      const recipeA = a.views
+      const recipeB = b.views
+    
+      let comparison = 0
+      if (recipeA > recipeB) {
+          comparison = 1
+        } else if (recipeA < recipeB) {
+            comparison = -1
+          }
+          // console.log(comparison)
+          return comparison * -1
+        
+        }
+        
+function sortByViews() {
+  // debugger
+  let RecipeObject = [...recipe];
+  let recipeSort = RecipeObject.sort(compare)
+  console.log(recipeSort)
+  setRecipe (recipeSort)
+}
+
+useEffect(() => {
+  if (spicy) {
+    sortByViews();
+  }
+}, [spicy]);
+
   return (
     <div>
+      
       <Grid item xs={12}>
         <TextField
           className={classes.filter}
@@ -88,6 +131,19 @@ function AllRecipes() {
           <MenuItem value="dinner">Dinner</MenuItem>
           <MenuItem value="dessert">Dessert</MenuItem>
         </TextField>
+
+
+        {/* ###  Sort By Views Button  ### */}
+        <Button 
+        variant="outlined"
+        color="secondary"
+        className={classes.button}
+        startIcon={<StarRateIcon />}
+        onClick={() => setSpicy(!spicy)}
+        >Spicy Recipes
+        </Button>
+
+
       </Grid>
       {RecipeMapper()}
     </div>
