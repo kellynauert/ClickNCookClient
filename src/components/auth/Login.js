@@ -9,7 +9,6 @@ import {
 } from '@material-ui/core';
 
 const Login = (props) => {
-  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -18,7 +17,6 @@ const Login = (props) => {
     fetch('http://localhost:3000/user/login', {
       method: 'POST',
       body: JSON.stringify({
-        username: username,
         email: email,
         password: password,
       }),
@@ -38,40 +36,29 @@ const Login = (props) => {
       <br />
 
       <Grid container spacing={12} justify="center" direction="row">
-        <Grid item>
+        <Grid item item xs={3}>
           <Grid
             container
             direction="column"
             justify="center"
             spacing={2}
             className="login-form"
+            
           >
             <Paper
               variant="elevation"
-              elevation={2}
+              elevation={3}
               className="login-background"
             >
               <Grid item>
-                <Typography component="h1" variant="h5">
-                  Log In
+                <Typography component="h1" variant="h5" align ='center'>
+                    <br />
+                  Log In to ClickNCook
                 </Typography>
               </Grid>
               <Grid item>
                 <form onSubmit={handleSubmit}>
                   <Grid container direction="column" spacing={2}>
-                    <Grid item>
-                      <TextField
-                        type="username"
-                        placeholder="Username"
-                        fullWidth
-                        name="username"
-                        variant="outlined"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        required
-                        autoFocus
-                      />
-                    </Grid>
                     <Grid item>
                       <TextField
                         type="email"
@@ -102,8 +89,9 @@ const Login = (props) => {
                         color="black"
                         type="submit"
                         className="button-block"
+                        
                       >
-                        Submit
+                        Lets Cook!
                       </Button>
                     </Grid>
                   </Grid>
