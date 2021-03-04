@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     position: 'absolute',
-    width: 225,
+    width: 275,
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #000',
     boxShadow: theme.shadows[5],
@@ -44,13 +44,28 @@ const RecipeEdit = (props) => {
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(true);
-  const [editRecipeName, setEditRecipeName] = useState('');
-  const [editCategory, setEditCategory] = useState('');
-  const [editIngredient, setEditIngredient] = useState('');
-  const [editIngredients, setEditIngredients] = useState([]);
-  const [editDirections, setEditDirections] = useState('');
-  const [editCookTime, setEditCookTime] = useState(0);
-  const [editServings, setEditServings] = useState(0);
+  const [editRecipeName, setEditRecipeName] = useState(
+    props.recipeToUpdate.recipe_name
+  );
+  const [editCategory, setEditCategory] = useState(
+    props.recipeToUpdate.category
+  );
+  const [editIngredient, setEditIngredient] = useState(
+    props.recipeToUpdate.ingredients.toString()
+  );
+  const [editIngredients, setEditIngredients] = useState(
+    props.recipeToUpdate.ingredients
+  );
+  const [editDirections, setEditDirections] = useState(
+    props.recipeToUpdate.directions
+  );
+  const [editCookTime, setEditCookTime] = useState(
+    props.recipeToUpdate.cook_time
+  );
+  const [editServings, setEditServings] = useState(
+    props.recipeToUpdate.servings
+  );
+  const [editImgUrl, setEditImgUrl] = useState(props.recipeToUpdate.photo_url);
 
   const recipeUpdate = (e, recipe) => {
     e.preventDefault();
@@ -64,6 +79,7 @@ const RecipeEdit = (props) => {
           directions: editDirections,
           servings: editServings,
           cook_time: editCookTime,
+          photo_url: editImgUrl,
         },
       }),
       headers: new Headers({
@@ -98,7 +114,7 @@ const RecipeEdit = (props) => {
         noValidate
         autoComplete="off"
       >
-        <h2> Form: Edit Recipe </h2>
+        <h2> Edit Recipe </h2>
         <TextField
           type="text"
           id="name"
@@ -126,7 +142,7 @@ const RecipeEdit = (props) => {
         <TextField
           id="ingredients"
           label="Ingredients"
-          helperText="Seperate ingredients with a ,"
+          helperText="Seperate ingredients with a , and after last ingredient"
           value={editIngredient}
           onChange={split}
         />
@@ -154,6 +170,16 @@ const RecipeEdit = (props) => {
           onChange={(e) => setEditServings(e.target.value)}
         />
         <br />
+        <TextField
+          variant="outlined"
+          fullWidth
+          id="image"
+          label="Image URL"
+          helperText="Enter URL of image"
+          value={editImgUrl}
+          onChange={(e) => setEditImgUrl(e.target.value)}
+        />
+        <br />
         <Button type="submit" onClick={recipeUpdate} variant="contained">
           Submit
         </Button>
@@ -164,6 +190,7 @@ const RecipeEdit = (props) => {
   return (
     <div>
       <Modal
+        fullWidth
         open={open}
         onClose={handleClose}
         aria-labelledby="simple-modal-title"

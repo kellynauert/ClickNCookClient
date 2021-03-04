@@ -31,7 +31,6 @@ const ReceipeIndex = (props) => {
   const [updateActive, setUpdateActive] = useState(false);
   const [recipes, setRecipes] = useState([]);
   const [recipeToUpdate, setRecipeToUpdate] = useState({});
-  const [category, setCategory] = useState('');
 
   const fetchRecipes = () => {
     fetch('http://localhost:3000/recipe/user', {
@@ -93,23 +92,6 @@ const ReceipeIndex = (props) => {
       )}
       <br />
       <br />
-      <Grid item xs={12}>
-        <TextField
-          className={classes.filter}
-          select
-          variant="outlined"
-          id="catecgory"
-          label="Recipes by Category"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-        >
-          <MenuItem value="">All Recipes</MenuItem>
-          <MenuItem value="breakfast">Breakfast</MenuItem>
-          <MenuItem value="lunch">Lunch</MenuItem>
-          <MenuItem value="dinner">Dinner</MenuItem>
-          <MenuItem value="dessert">Dessert</MenuItem>
-        </TextField>
-      </Grid>
       <Grid>
         <h1 className={classes.text}>My Recipes</h1>
       </Grid>
@@ -124,7 +106,6 @@ const ReceipeIndex = (props) => {
       >
         <RecipeCard
           recipes={recipes}
-          category={category}
           editUpdateRecipe={editUpdateRecipe}
           updateOn={updateOn}
           fetchRecipes={fetchRecipes}
