@@ -128,10 +128,10 @@ const RecipeCreate = (props) => {
                 <MenuItem value="" disabled>
                   select
                 </MenuItem>
-                <MenuItem value="breakfast">Breakfast</MenuItem>
-                <MenuItem value="lunch">Lunch</MenuItem>
-                <MenuItem value="dinner">Dinner</MenuItem>
-                <MenuItem value="dessert">Dessert</MenuItem>
+                <MenuItem value="Breakfast">Breakfast</MenuItem>
+                <MenuItem value="Lunch">Lunch</MenuItem>
+                <MenuItem value="Dinner">Dinner</MenuItem>
+                <MenuItem value="Dessert">Dessert</MenuItem>
               </TextField>
             </Grid>
             <br />
