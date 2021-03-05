@@ -1,19 +1,19 @@
 import { React, useEffect, useState } from 'react';
 import {
-	BrowserRouter as Router,
-	Switch,
-	Route,
-	Link,
-	useParams,
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useParams,
 } from 'react-router-dom';
 import SingleRecipe from '../Recipes/SingleRecipe';
 import {
-	AppBar,
-	Box,
-	Toolbar,
-	Typography,
-	Modal,
-	Button,
+  AppBar,
+  Box,
+  Toolbar,
+  Typography,
+  Modal,
+  Button,
 } from '@material-ui/core';
 import { spacing } from '@material-ui/system';
 import Auth from '../auth/Auth';
@@ -24,15 +24,16 @@ import AllRecipes from '../Recipes/Allrecipes';
 import ChefRecipes from '../Recipes/ChefRecipes';
 
 export default function NavBar(props) {
-
 	 
 	function Home() {
 		return <AllRecipes />;
 	}
 
-	function MyRecipes() {
-		return props.token ? <RecipeIndex token={props.token} /> : <>My Recipes</>;
-	}
+
+  function MyRecipes() {
+    return props.token ? <RecipeIndex token={props.token} /> : <>My Recipes</>;
+  }
+
 
 	function SingleRecipePath() {
 		let { id } = useParams();
@@ -65,17 +66,22 @@ export default function NavBar(props) {
 		setButtonText('Login');
 	};
 
-	const handleOpenSignup = () => {
-		setOpenSignup(true);
-	};
+  const handleOpenSignup = () => {
+    setOpenSignup(true);
+  };
 
-	const handleClose = () => {
-		setOpenLogin(false);
-		setOpenSignup(false);
-		setButtonText('Logout');
-	};
+  const handleClose = () => {
+    if (props.token) {
+      setOpenLogin(false);
+      setOpenSignup(false);
+      setButtonText('Logout');
+    }
+  };
 
-	
+
+	  useEffect(() => {
+    handleClose();
+  }, [props.token]);
 
 	return (
 		<Router>
@@ -124,7 +130,7 @@ export default function NavBar(props) {
 								>
 									<Typography variant='subtitle1'>{buttonText}</Typography>
 								</Button>
-								<Modal open={openLogin} onBackdropClick={handleClose}>
+								<Modal open={openLogin} onSubmit={handleClose}>
 									<Login token={props.token} updateToken={props.updateToken} setIsLoggedIn={props.setIsLoggedIn} />
 								</Modal>
 							</Box>
@@ -139,7 +145,7 @@ export default function NavBar(props) {
 								<Typography variant='subtitle1'>Signup</Typography>
 							</Button>}
 
-								<Modal open={openSignup} onBackdropClick={handleClose}>
+								<Modal open={openSignup} onSubmit={handleClose}>
 									<Signup token={props.token} updateToken={props.updateToken} setIsLoggedIn={props.setIsLoggedIn}/>
 								</Modal>
 							</Box>
@@ -148,25 +154,4 @@ export default function NavBar(props) {
 				</Box>
 			</AppBar>
 
-			<Box className='container' marginTop={4} marginBottom={4}>
-				<Switch>
-					<Route path='/myrecipes'>
-						<MyRecipes />
-					</Route>
-					<Route path='/singlerecipe/:id'>
-						<SingleRecipePath />
-					</Route>
-					<Route exact path='/'>
-						<Home />
-					</Route>
-					<Route path='/chef/:id'>
-						<ChefRecipesPath />
-					</Route>
-					<Route path='/auth'>
-						<AuthPath />
-					</Route>
-				</Switch>
-			</Box>
-		</Router>
-	);
 }
