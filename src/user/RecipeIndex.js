@@ -1,117 +1,129 @@
 import React, { useState, useEffect } from 'react';
-import {
-	Button,
-	Box,
-	TextField,
-	MenuItem,
-	Grid,
-	Typography,
-} from '@material-ui/core/';
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import { Grid, TextField, MenuItem } from '@material-ui/core';
 import RecipeCard from './RecipeCard';
 import RecipeEdit from './RecipeEdit';
 import RecipeCreate from './RecipeCreate';
 
-const RecipeIndex = (props) => {
-	const [buttonText, setButtonText] = useState('Create Recipe');
-	const [show, setShow] = useState(false);
-	const [updateActive, setUpdateActive] = useState(false);
-	const [recipes, setRecipes] = useState([]);
-	const [recipeToUpdate, setRecipeToUpdate] = useState({});
+const useStyles = makeStyles({
+  gridConatiner: {
+    paddingLeft: '25px',
+    paddingRight: '25px',
+    paddingTop: '10px',
+  },
+  text: {
+    textAlign: 'center',
+  },
+  btn: {
+    marginTop: '10px',
+    marginLeft: '15px',
+  },
+  filter: {
+    width: '190px',
+  },
+});
 
-	const fetchRecipes = () => {
-		fetch('http://localhost:3000/recipe/user', {
-			method: 'GET',
-			headers: new Headers({
-				'Content-Type': 'application/json',
-				Authorization: props.token,
-			}),
-		})
-			.then((res) => res.json())
-			.then((logData) => {
-				console.log(logData);
-				setRecipes(logData);
-			});
-	};
+const ReceipeIndex = (props) => {
+  const classes = useStyles();
+  const [buttonText, setButtonText] = useState('Create Recipe');
+  const [show, setShow] = useState(false);
+  const [updateActive, setUpdateActive] = useState(false);
+  const [recipes, setRecipes] = useState([]);
+  const [recipeToUpdate, setRecipeToUpdate] = useState({});
 
-	const editUpdateRecipe = (recipe) => {
-		setRecipeToUpdate(recipe);
-		console.log(recipe);
-	};
+  const fetchRecipes = () => {
+    fetch('http://localhost:3000/recipe/user', {
+      method: 'GET',
+      headers: new Headers({
+        'Content-Type': 'application/json',
+        Authorization: props.token,
+      }),
+    })
+      .then((res) => res.json())
+      .then((logData) => {
+        console.log(logData);
+        setRecipes(logData);
+      });
+  };
 
-	const updateOn = () => {
-		setUpdateActive(true);
-	};
+  const editUpdateRecipe = (recipe) => {
+    setRecipeToUpdate(recipe);
+    console.log(recipe);
+  };
 
-	const updateOff = () => {
-		setUpdateActive(false);
-	};
+  const updateOn = () => {
+    setUpdateActive(true);
+  };
 
-	const handleClick = () => {
-		setShow(!show);
-		if (show) {
-			setButtonText('Create Recipe');
-		}
+  const updateOff = () => {
+    setUpdateActive(false);
+  };
 
-		if (!show) {
-			setButtonText('Close Form');
-		}
-	};
+  const handleClick = () => {
+    setShow(!show);
+    if (show) {
+      setButtonText('Create Recipe');
+    }
 
-	useEffect(() => {
-		fetchRecipes();
-	}, []);
+    if (!show) {
+      setButtonText('Close Form');
+    }
+  };
 
-	return (
-		<div>
-			<Box
-				display='flex'
-				flexDirection='row'
-				alignItems='center'
-				justifyContent='space-between'
-			>
-				<Box>
-					<Typography variant='h2' color='textPrimary'>
-						My Recipes
-					</Typography>
-				</Box>
-				<Box>
-					<Button
-						variant='contained'
-						color='primary'
-						style={{ backgroundColor: '#FF8F00' }}
-						onClick={handleClick}
-					>
-						{buttonText}
-					</Button>
-					{show ? (
-						<RecipeCreate fetchRecipes={fetchRecipes} token={props.token} />
-					) : (
-						<></>
-					)}
-				</Box>
-			</Box>
-			<Grid container direction='row' spacing={2}>
-				<RecipeCard
-					recipes={recipes}
-					editUpdateRecipe={editUpdateRecipe}
-					updateOn={updateOn}
-					fetchRecipes={fetchRecipes}
-					token={props.token}
-				/>
+  useEffect(() => {
+    fetchRecipes();
+  }, []);
 
-				{updateActive ? (
-					<RecipeEdit
-						recipeToUpdate={recipeToUpdate}
-						updateOff={updateOff}
-						fetchRecipes={fetchRecipes}
-						token={props.token}
-					/>
-				) : (
-					<></>
-				)}
-			</Grid>
-		</div>
-	);
+  return (
+    <div>
+      <Button
+        className={classes.btn}
+        variant="contained"
+        color="primary"
+        onClick={handleClick}
+      >
+        {buttonText}
+      </Button>
+      {show ? (
+        <RecipeCreate fetchRecipes={fetchRecipes} token={props.token} />
+      ) : (
+        <></>
+      )}
+      <br />
+      <br />
+      <Grid>
+        <h1 className={classes.text}>My Recipes</h1>
+      </Grid>
+      <hr />
+      <Grid
+        container
+        spacing={4}
+        direction="row"
+        justify="center"
+        alignItems="flex-start"
+        className={classes.gridConatiner}
+      >
+        <RecipeCard
+          recipes={recipes}
+          editUpdateRecipe={editUpdateRecipe}
+          updateOn={updateOn}
+          fetchRecipes={fetchRecipes}
+          token={props.token}
+        />
+        {updateActive ? (
+          <RecipeEdit
+            recipeToUpdate={recipeToUpdate}
+            updateOff={updateOff}
+            fetchRecipes={fetchRecipes}
+            token={props.token}
+          />
+        ) : (
+          <></>
+        )}
+      </Grid>
+    </div>
+  );
 };
 
-export default RecipeIndex;
+export default ReceipeIndex;
