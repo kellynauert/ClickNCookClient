@@ -11,7 +11,7 @@ import {
 const Login = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  
   const handleSubmit = (event) => {
     event.preventDefault();
     fetch('http://localhost:3000/user/login', {
@@ -26,6 +26,7 @@ const Login = (props) => {
     })
       .then((response) => response.json())
       .then((data) => {
+          props.setIsLoggedIn(true)
         props.updateToken(data.sessionToken);
       });
   };
@@ -83,10 +84,11 @@ const Login = (props) => {
                         required
                       />
                     </Grid>
-                    <Grid item>
+                    <Grid item align='center'>
                       <Button
                         variant="contained"
-                        color="black"
+                        color="secondary"
+                        style={{ backgroundColor: '#FF8F00' }}
                         type="submit"
                         className="button-block"
                         
@@ -97,10 +99,12 @@ const Login = (props) => {
                   </Grid>
                 </form>
               </Grid>
-              <Grid item>
+              <Grid item align='center'>
                 <Link href="#" variant="body2">
                   Forgot Password?
+                  
                 </Link>
+                <br />
               </Grid>
             </Paper>
           </Grid>

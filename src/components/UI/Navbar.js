@@ -24,6 +24,8 @@ import AllRecipes from '../Recipes/Allrecipes';
 import ChefRecipes from '../Recipes/ChefRecipes';
 
 export default function NavBar(props) {
+
+	 
 	function Home() {
 		return <AllRecipes />;
 	}
@@ -37,7 +39,7 @@ export default function NavBar(props) {
 		return <SingleRecipe recipeID={id} />;
 	}
 	function AuthPath() {
-		return <Auth token={props.sessionToken} updateToken={props.updateToken} />;
+		return <Auth token={props.sessionToken} updateToken={props.updateToken} setIsLoggedIn={props.setIsLoggedIn} />;
 	}
 	function ChefRecipesPath() {
 		let { id } = useParams();
@@ -73,6 +75,8 @@ export default function NavBar(props) {
 		setButtonText('Logout');
 	};
 
+	
+
 	return (
 		<Router>
 			<AppBar
@@ -97,14 +101,14 @@ export default function NavBar(props) {
 									<Typography variant='subtitle1'>Explore Recipes</Typography>
 								</Link>
 							</Box>
-							<Box marginRight={4}>
+							{ props.isLoggedIn && <Box marginRight={4}>
 								<Link
 									to='/myrecipes'
 									style={{ color: 'black', textDecoration: 'none' }}
 								>
 									<Typography variant='subtitle1'>My Recipes</Typography>
 								</Link>
-							</Box>
+							</Box>}
 						</Box>
 						<Box
 							width='100%'
@@ -121,22 +125,22 @@ export default function NavBar(props) {
 									<Typography variant='subtitle1'>{buttonText}</Typography>
 								</Button>
 								<Modal open={openLogin} onBackdropClick={handleClose}>
-									<Login token={props.token} updateToken={props.updateToken} />
+									<Login token={props.token} updateToken={props.updateToken} setIsLoggedIn={props.setIsLoggedIn} />
 								</Modal>
 							</Box>
 						</Box>
 						<Box>
 							<Box justifySelf='right'>
-								<Button
-									type='button'
-									onClick={handleOpenSignup}
-									style={{ color: 'black', textDecoration: 'none' }}
-								>
-									<Typography variant='subtitle1'>Signup</Typography>
-								</Button>
+							 {!props.isLoggedIn && <Button
+								type='button'
+								onClick={handleOpenSignup}
+								style={{ color: 'black', textDecoration: 'none' }}
+							>
+								<Typography variant='subtitle1'>Signup</Typography>
+							</Button>}
 
 								<Modal open={openSignup} onBackdropClick={handleClose}>
-									<Signup token={props.token} updateToken={props.updateToken} />
+									<Signup token={props.token} updateToken={props.updateToken} setIsLoggedIn={props.setIsLoggedIn}/>
 								</Modal>
 							</Box>
 						</Box>
