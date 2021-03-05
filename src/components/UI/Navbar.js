@@ -141,6 +141,7 @@ export default function NavBar(props) {
                   <Typography variant="subtitle1">Signup</Typography>
                 </Button>
 
+
                 <Modal open={openSignup} onSubmit={handleClose}>
                   <Signup token={props.token} updateToken={props.updateToken} />
                 </Modal>
@@ -171,4 +172,5 @@ export default function NavBar(props) {
       </Box>
     </Router>
   );
+
 }

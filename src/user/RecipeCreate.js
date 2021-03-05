@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import {
-  TextField,
-  MenuItem,
-  TextareaAutosize,
-  CssBaseline,
+	TextField,
+	MenuItem,
+	TextareaAutosize,
+	CssBaseline,
 } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
@@ -13,84 +13,85 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    '& > *': {
-      margin: theme.spacing(1),
-      width: '25ch',
-    },
-  },
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-  textArea: {
-    display: 'block',
-  },
+	root: {
+		'& > *': {
+			margin: theme.spacing(1),
+			width: '25ch',
+		},
+	},
+	paper: {
+		marginTop: theme.spacing(8),
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center',
+	},
+	form: {
+		width: '100%', // Fix IE 11 issue.
+		marginTop: theme.spacing(3),
+	},
+	submit: {
+		margin: theme.spacing(3, 0, 2),
+	},
+	textArea: {
+		display: 'block',
+	},
 }));
 
 const RecipeCreate = (props) => {
-  const classes = useStyles();
-  const [recipeName, setRecipeName] = useState('');
-  const [category, setCategory] = useState('');
-  const [ingredient, setIngredient] = useState('');
-  const [ingredients, setIngredients] = useState([]);
-  const [directions, setDirections] = useState('');
-  const [cookTime, setCookTime] = useState(0);
-  const [servings, setServings] = useState(0);
-  const [views, setViews] = useState(0);
-  const [imgUrl, setImgUrl] = useState('');
+	const classes = useStyles();
+	const [recipeName, setRecipeName] = useState('');
+	const [category, setCategory] = useState('');
+	const [ingredient, setIngredient] = useState('');
+	const [ingredients, setIngredients] = useState([]);
+	const [directions, setDirections] = useState('');
+	const [cookTime, setCookTime] = useState(0);
+	const [servings, setServings] = useState(0);
+	const [views, setViews] = useState(0);
+	const [imgUrl, setImgUrl] = useState('');
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    fetch('http://localhost:3000/recipe/create', {
-      method: 'POST',
-      body: JSON.stringify({
-        recipe: {
-          recipe_name: recipeName,
-          category: category,
-          ingredients: ingredients,
-          directions: directions,
-          cook_time: cookTime,
-          servings: servings,
-          views: views,
-          photo_url: imgUrl,
-        },
-      }),
-      headers: new Headers({
-        'Content-Type': 'application/json',
-        Authorization: props.token,
-      }),
-    })
-      .then((res) => res.json())
-      .then((logData) => {
-        console.log(logData);
-        setRecipeName('');
-        setCategory('');
-        setIngredient('');
-        setIngredients([]);
-        setDirections('');
-        setCookTime(0);
-        setServings(0);
-        setViews(0);
-        setImgUrl('');
-        props.fetchRecipes();
-      });
-  };
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		fetch('http://localhost:3000/recipe/create', {
+			method: 'POST',
+			body: JSON.stringify({
+				recipe: {
+					recipe_name: recipeName,
+					category: category,
+					ingredients: ingredients,
+					directions: directions,
+					cook_time: cookTime,
+					servings: servings,
+					views: views,
+					photo_url: imgUrl,
+				},
+			}),
+			headers: new Headers({
+				'Content-Type': 'application/json',
+				Authorization: props.token,
+			}),
+		})
+			.then((res) => res.json())
+			.then((logData) => {
+				console.log(logData);
+				setRecipeName('');
+				setCategory('');
+				setIngredient('');
+				setIngredients([]);
+				setDirections('');
+				setCookTime(0);
+				setServings(0);
+				setViews(0);
+				setImgUrl('');
+				props.fetchRecipes();
+			});
+	};
 
-  const split = ({ target }) => {
-    setIngredient(target.value);
-    let result = ingredient.split(',');
-    setIngredients(result);
-  };
+	const split = ({ target }) => {
+		setIngredient(target.value);
+		let result = ingredient.split(',');
+		setIngredients(result);
+	};
+
 
   return (
     <Container component="main" maxWidth="xs">
@@ -216,6 +217,7 @@ const RecipeCreate = (props) => {
       </div>
     </Container>
   );
+
 };
 
 export default RecipeCreate;
