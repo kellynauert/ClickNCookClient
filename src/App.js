@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 
 function App() {
 	const [sessionToken, setSessionToken] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
 	useEffect(() => {
 		if (localStorage.getItem('token')) {
@@ -20,6 +21,7 @@ function App() {
 	const clearToken = () => {
 		localStorage.clear();
 		setSessionToken('');
+    setIsLoggedIn(false)
 	};
 
 	return (
@@ -28,6 +30,8 @@ function App() {
 				token={sessionToken}
 				updateToken={updateToken}
 				logout={clearToken}
+        setIsLoggedIn={setIsLoggedIn}
+        isLoggedIn={isLoggedIn}
 			/>
 		</>
 	);
