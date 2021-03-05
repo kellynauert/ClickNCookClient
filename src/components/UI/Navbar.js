@@ -68,10 +68,16 @@ export default function NavBar(props) {
 	};
 
 	const handleClose = () => {
-		setOpenLogin(false);
-		setOpenSignup(false);
-		setButtonText('Logout');
+		if (props.token) {
+			setOpenLogin(false);
+			setOpenSignup(false);
+			setButtonText('Logout');
+		}
 	};
+
+	useEffect(() => {
+		handleClose();
+	}, [props.token]);
 
 	return (
 		<Router>
@@ -120,7 +126,7 @@ export default function NavBar(props) {
 								>
 									<Typography variant='subtitle1'>{buttonText}</Typography>
 								</Button>
-								<Modal open={openLogin} onBackdropClick={handleClose}>
+								<Modal open={openLogin} onSubmit={handleClose}>
 									<Login token={props.token} updateToken={props.updateToken} />
 								</Modal>
 							</Box>
@@ -135,7 +141,7 @@ export default function NavBar(props) {
 									<Typography variant='subtitle1'>Signup</Typography>
 								</Button>
 
-								<Modal open={openSignup} onBackdropClick={handleClose}>
+								<Modal open={openSignup} onSubmit={handleClose}>
 									<Signup token={props.token} updateToken={props.updateToken} />
 								</Modal>
 							</Box>
