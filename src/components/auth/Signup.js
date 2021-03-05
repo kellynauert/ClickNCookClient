@@ -28,6 +28,7 @@ const Signup = (props) => {
 		})
 			.then((response) => response.json())
 			.then((data) => {
+                props.setIsLoggedIn(true)
 				props.updateToken(data.sessionToken);
 			});
 	};
@@ -95,20 +96,22 @@ const Signup = (props) => {
 												name='password'
 												variant='outlined'
 												value={password}
-												onChange={(e) => setPassword(e.target.value)}
+                                            	onChange={(e) => setPassword(e.target.value)}
 												required
 											/>
 										</Grid>
-										<Grid item>
+										<Grid item align='center'>
 											<Button
 												variant='contained'
-												color= '#FF8F00'
+                                                color="secondary"
+												style={{ backgroundColor: '#FF8F00' }}
 												type='submit'
 												className='button-block'
                                                 
 											>
 												Signup
-											</Button>
+                                            </Button>
+                                            <br />
 										</Grid>
 									</Grid>
 								</form>
