@@ -6,28 +6,29 @@ import {
 	MenuItem,
 	makeStyles,
 	TextField,
-	Button,
+  Button,
 } from '@material-ui/core/';
 import RecipeCard from './Bits/RecipeCard';
 import StarRateIcon from '@material-ui/icons/StarRate';
 const useStyles = makeStyles({
 	filter: {
 		width: '190px',
-		color: '#FF8F00',
-		borderColor: '#FF8F00',
 	},
 });
 
-function AllRecipes() {
-	const classes = useStyles();
-	const [recipe, setRecipe] = useState([]);
-	const [spicy, setSpicy] = useState(false);
-	const [filterCategory, setFilterCategory] = useState('');
 
-	useEffect(() => {
-		getAllRecipes();
-		// console.log(recipe);
-	}, []);
+
+function AllRecipes() {
+  const classes = useStyles();
+  const [recipe, setRecipe] = useState([]);
+  const [spicy, setSpicy] = useState(false);
+  const [filterCategory, setFilterCategory] = useState('');
+
+
+  useEffect(() => {
+    getAllRecipes();
+    // console.log(recipe);
+  }, []);
 
 	function getAllRecipes() {
 		fetch(`http://localhost:3000/recipe/`, {
@@ -53,35 +54,36 @@ function AllRecipes() {
 			});
 	};
 
-	function compare(a, b) {
-		// console.log(recipe)
+  function compare(a, b) {
+    // console.log(recipe)
+  
+    const recipeA = a.views
+    const recipeB = b.views
+  
+    let comparison = 0
+    if (recipeA > recipeB) {
+        comparison = 1
+      } else if (recipeA < recipeB) {
+          comparison = -1
+        }
+        // console.log(comparison)
+        return comparison * -1
+      
+      }
+      
+function sortByViews() {
+// debugger
+let RecipeObject = [...recipe];
+let recipeSort = RecipeObject.sort(compare)
+console.log(recipeSort)
+setRecipe (recipeSort)
+}
 
-		const recipeA = a.views;
-		const recipeB = b.views;
-
-		let comparison = 0;
-		if (recipeA > recipeB) {
-			comparison = 1;
-		} else if (recipeA < recipeB) {
-			comparison = -1;
-		}
-		// console.log(comparison)
-		return comparison * -1;
-	}
-
-	function sortByViews() {
-		// debugger
-		let RecipeObject = [...recipe];
-		let recipeSort = RecipeObject.sort(compare);
-		console.log(recipeSort);
-		setRecipe(recipeSort);
-	}
-
-	useEffect(() => {
-		if (spicy) {
-			sortByViews();
-		}
-	}, [spicy]);
+useEffect(() => {
+if (spicy) {
+  sortByViews();
+}
+}, [spicy]);
 
 	return (
 		<div>
@@ -96,21 +98,7 @@ function AllRecipes() {
 						All Recipes
 					</Typography>
 				</Box>
-				<Box display='flex' flexDirection='row' alignItems='center'>
-					<Button
-						variant='outlined'
-						color='secondary'
-						startIcon={<StarRateIcon />}
-						onClick={() => setSpicy(!spicy)}
-						style={{
-							marginRight: '16px',
-							padding: '15px',
-							borderColor: '#FF8F00',
-							color: '#FF8F00',
-						}}
-					>
-						Spicy Recipes
-					</Button>
+				<Box>
 					<TextField
 						className={classes.filter}
 						select
@@ -127,6 +115,17 @@ function AllRecipes() {
 						<MenuItem value='Dessert'>Dessert</MenuItem>
 					</TextField>
 				</Box>
+
+        {/* ###  Sort By Views Button  ### */}
+        <Button 
+        variant="outlined"
+        color="secondary"
+        className={classes.button}
+        startIcon={<StarRateIcon />}
+        onClick={() => setSpicy(!spicy)}
+        >Spicy Recipes
+        </Button>
+
 			</Box>
 			<Grid container direction='row' spacing={2}>
 				{RecipeMapper()}

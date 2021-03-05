@@ -28,7 +28,7 @@ export default function NavBar(props) {
 		return <AllRecipes />;
 	}
 
-	function MyRecipesPath() {
+	function MyRecipes() {
 		return props.token ? <RecipeIndex token={props.token} /> : <>My Recipes</>;
 	}
 
@@ -147,7 +147,7 @@ export default function NavBar(props) {
 			<Box className='container' marginTop={4} marginBottom={4}>
 				<Switch>
 					<Route path='/myrecipes'>
-						<MyRecipesPath />
+						<MyRecipes />
 					</Route>
 					<Route path='/singlerecipe/:id'>
 						<SingleRecipePath />
