@@ -7,12 +7,10 @@ import {
 	makeStyles,
 	TextField,
 	Button,
-
 } from '@material-ui/core/';
 import RecipeCard from './Bits/RecipeCard';
 import StarRateIcon from '@material-ui/icons/StarRate';
 const useStyles = makeStyles({
-
 	filter: {
 		width: '190px',
 		color: '#FF8F00',
@@ -26,36 +24,34 @@ function AllRecipes() {
 	const [spicy, setSpicy] = useState(false);
 	const [filterCategory, setFilterCategory] = useState('');
 
-
 	useEffect(() => {
 		getAllRecipes();
 		// console.log(recipe);
 	}, []);
 
-  function getAllRecipes() {
-    fetch(`http://localhost:3000/recipe/`, {
-      method: 'GET',
-      headers: new Headers({
-        'Content-Type': 'application/json',
-      }),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        setRecipe(res);
-        console.log(recipe);
-      });
-  }
+	function getAllRecipes() {
+		fetch(`http://localhost:3000/recipe/`, {
+			method: 'GET',
+			headers: new Headers({
+				'Content-Type': 'application/json',
+			}),
+		})
+			.then((res) => res.json())
+			.then((res) => {
+				setRecipe(res);
+				console.log(recipe);
+			});
+	}
 
-  const RecipeMapper = () => {
-    return recipe
-      .filter(
-        (recipe) => filterCategory === recipe.category || filterCategory === ''
-      )
-      .map((recipe, index) => {
-        return <RecipeCard key={index} recipe={recipe} />;
-      });
-  };
-
+	const RecipeMapper = () => {
+		return recipe
+			.filter(
+				(recipe) => filterCategory === recipe.category || filterCategory === ''
+			)
+			.map((recipe, index) => {
+				return <RecipeCard key={index} recipe={recipe} />;
+			});
+	};
 
 	function compare(a, b) {
 		// console.log(recipe)
