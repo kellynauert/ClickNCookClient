@@ -6,7 +6,7 @@ import Directions from './Bits/Directions';
 import React, { useEffect, useState } from 'react';
 import StopWatchApp from './Bits/StopWatchApp';
 import { spacing } from '@material-ui/system';
-
+import APIURL from '../../helpers/environment';
 function SingleRecipe(props) {
 	const [recipe, setRecipe] = useState('');
 
@@ -16,7 +16,7 @@ function SingleRecipe(props) {
 	function fetchRecipes() {
 		console.log(props);
 
-		fetch(`http://localhost:3000/recipe/id/${props.recipeID}`, {
+		fetch(`${APIURL}/recipe/id/${props.recipeID}`, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',

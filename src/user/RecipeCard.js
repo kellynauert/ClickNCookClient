@@ -18,10 +18,10 @@ import {
 import Icon from '@mdi/react';
 import { Link } from 'react-router-dom';
 import RecipeCardTitle from '../components/Recipes/Bits/RecipeCardTitle';
-
+import APIURL from '../helpers/environment';
 const RecipeCard = (props) => {
 	const deleteRecipe = (recipe) => {
-		fetch(`http://localhost:3000/recipe/delete/${recipe.id}`, {
+		fetch(`${APIURL}/recipe/delete/${recipe.id}`, {
 			method: 'DELETE',
 			headers: new Headers({
 				'Content-Type': 'application/json',

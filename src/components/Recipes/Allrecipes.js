@@ -10,6 +10,8 @@ import {
 } from '@material-ui/core/';
 import RecipeCard from './Bits/RecipeCard';
 import StarRateIcon from '@material-ui/icons/StarRate';
+import APIURL from '../../helpers/environment';
+
 const useStyles = makeStyles({
 	filter: {
 		width: '190px',
@@ -17,7 +19,6 @@ const useStyles = makeStyles({
 		borderColor: '#FF8F00',
 	},
 });
-
 function AllRecipes() {
 	const classes = useStyles();
 	const [recipe, setRecipe] = useState([]);
@@ -30,7 +31,7 @@ function AllRecipes() {
 	}, []);
 
 	function getAllRecipes() {
-		fetch(`http://localhost:3000/recipe/`, {
+		fetch(`${APIURL}/recipe/`, {
 			method: 'GET',
 			headers: new Headers({
 				'Content-Type': 'application/json',

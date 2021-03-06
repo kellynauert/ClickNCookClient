@@ -7,7 +7,7 @@ import {
 	Typography,
 	Link,
 } from '@material-ui/core';
-
+import APIURL from '../../helpers/environment';
 const Signup = (props) => {
 	const [username, setUsername] = useState('');
 	const [email, setEmail] = useState('');
@@ -15,7 +15,7 @@ const Signup = (props) => {
 
 	let handleSubmit = (event) => {
 		event.preventDefault();
-		fetch('http://localhost:3000/user/register', {
+		fetch(`${APIURL}/user/register`, {
 			method: 'POST',
 			body: JSON.stringify({
 				username: username,
@@ -28,7 +28,7 @@ const Signup = (props) => {
 		})
 			.then((response) => response.json())
 			.then((data) => {
-                props.setIsLoggedIn(true)
+				props.setIsLoggedIn(true);
 				props.updateToken(data.sessionToken);
 			});
 	};
@@ -55,9 +55,8 @@ const Signup = (props) => {
 						>
 							<Grid item spacing={6}>
 								<Typography component='h1' variant='h5' align='center'>
-                                 <br></br>
-									       Sign Up for ClickNCook
-                                          
+									<br></br>
+									Sign Up for ClickNCook
 								</Typography>
 							</Grid>
 							<Grid item>
@@ -96,22 +95,21 @@ const Signup = (props) => {
 												name='password'
 												variant='outlined'
 												value={password}
-                                            	onChange={(e) => setPassword(e.target.value)}
+												onChange={(e) => setPassword(e.target.value)}
 												required
 											/>
 										</Grid>
 										<Grid item align='center'>
 											<Button
 												variant='contained'
-                                                color="secondary"
+												color='secondary'
 												style={{ backgroundColor: '#FF8F00' }}
 												type='submit'
 												className='button-block'
-                                                
 											>
 												Signup
-                                            </Button>
-                                            <br />
+											</Button>
+											<br />
 										</Grid>
 									</Grid>
 								</form>

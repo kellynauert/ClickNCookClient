@@ -10,7 +10,7 @@ import {
 import RecipeCard from './RecipeCard';
 import RecipeEdit from './RecipeEdit';
 import RecipeCreate from './RecipeCreate';
-
+import APIURL from '../helpers/environment';
 const RecipeIndex = (props) => {
 	const [buttonText, setButtonText] = useState('Create Recipe');
 	const [show, setShow] = useState(false);
@@ -19,7 +19,7 @@ const RecipeIndex = (props) => {
 	const [recipeToUpdate, setRecipeToUpdate] = useState({});
 
 	const fetchRecipes = () => {
-		fetch('http://localhost:3000/recipe/user', {
+		fetch(`${APIURL}/recipe/user`, {
 			method: 'GET',
 			headers: new Headers({
 				'Content-Type': 'application/json',

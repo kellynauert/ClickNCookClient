@@ -224,7 +224,7 @@ import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-
+import APIURL from '../helpers/environment';
 const useStyles = makeStyles((theme) => ({
 	root: {
 		'& > *': {
@@ -262,7 +262,7 @@ const RecipeCreate = (props) => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		fetch('http://localhost:3000/recipe/create', {
+		fetch(`${APIURL}/recipe/create`, {
 			method: 'POST',
 			body: JSON.stringify({
 				recipe: {

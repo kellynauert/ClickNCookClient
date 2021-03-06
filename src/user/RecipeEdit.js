@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import { TextField, TextareaAutosize, MenuItem } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
-
+import APIURL from '../helpers/environment';
 function rand() {
 	return Math.round(Math.random() * 20) - 10;
 }
@@ -69,7 +69,7 @@ const RecipeEdit = (props) => {
 
 	const recipeUpdate = (e, recipe) => {
 		e.preventDefault();
-		fetch(`http://localhost:3000/recipe/${props.recipeToUpdate.id}`, {
+		fetch(`${APIURL}/recipe/${props.recipeToUpdate.id}`, {
 			method: 'PUT',
 			body: JSON.stringify({
 				recipe: {

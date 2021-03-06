@@ -11,6 +11,8 @@ import {
 	TextField,
 } from '@material-ui/core/';
 import RecipeCard from './Bits/RecipeCard';
+import APIURL from '../../helpers/environment';
+
 const useStyles = makeStyles({
 	filter: {
 		width: '190px',
@@ -28,7 +30,7 @@ function ChefRecipes(props) {
 	}, []);
 
 	function getAllRecipes() {
-		fetch(`http://localhost:3000/recipe/${props.chef}`, {
+		fetch(`${APIURL}/recipe/${props.chef}`, {
 			method: 'GET',
 			headers: new Headers({
 				'Content-Type': 'application/json',
