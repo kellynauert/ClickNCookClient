@@ -1,25 +1,40 @@
-import logo from './logo.svg';
 import './App.css';
+import Navbar from './components/UI/Navbar';
+import React, { useState, useEffect } from 'react';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const [sessionToken, setSessionToken] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+	useEffect(() => {
+		if (localStorage.getItem('token')) {
+			setSessionToken(localStorage.getItem('token'));
+		}
+	}, []);
+
+	const updateToken = (newToken) => {
+		localStorage.setItem('token', newToken);
+		setSessionToken(newToken);
+		console.log(sessionToken);
+	};
+
+	const clearToken = () => {
+		localStorage.clear();
+		setSessionToken('');
+    setIsLoggedIn(false)
+	};
+
+	return (
+		<>
+			<Navbar
+				token={sessionToken}
+				updateToken={updateToken}
+				logout={clearToken}
+        setIsLoggedIn={setIsLoggedIn}
+        isLoggedIn={isLoggedIn}
+			/>
+		</>
+	);
 }
 
 export default App;
