@@ -134,7 +134,11 @@ export default function NavBar(props) {
 								>
 									<Typography variant='subtitle1'>{buttonText}</Typography>
 								</Button>
-								<Modal open={openLogin} onSubmit={handleClose}>
+								<Modal
+									open={openLogin}
+									onSubmit={handleClose}
+									onBackdropClick={() => setOpenLogin(false)}
+								>
 									<Login
 										token={props.token}
 										updateToken={props.updateToken}
@@ -155,7 +159,11 @@ export default function NavBar(props) {
 									</Button>
 								)}
 
-								<Modal open={openSignup} onSubmit={handleClose}>
+								<Modal
+									open={openSignup}
+									onSubmit={handleClose}
+									onBackdropClick={() => setOpenSignup(false)}
+								>
 									<Signup
 										token={props.token}
 										updateToken={props.updateToken}
