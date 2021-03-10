@@ -14,6 +14,7 @@ import {
 	Typography,
 	Modal,
 	Button,
+	Grid,
 } from '@material-ui/core';
 import { spacing } from '@material-ui/system';
 import Auth from '../auth/Auth';
@@ -24,6 +25,9 @@ import AllRecipes from '../Recipes/Allrecipes';
 import ChefRecipes from '../Recipes/ChefRecipes';
 
 export default function NavBar(props) {
+	const [buttonColor, setbuttonColor] = useState('#FF9003');
+	const [textColor, setTextColor] = useState('white');
+
 	function Home() {
 		return <AllRecipes />;
 	}
@@ -63,6 +67,7 @@ export default function NavBar(props) {
 		if (buttonText === 'Logout') {
 			props.logout();
 			setButtonText('Login');
+			setbuttonColor('#FF9003');
 			return null;
 		}
 		setOpenLogin(true);
@@ -78,6 +83,7 @@ export default function NavBar(props) {
 			setOpenLogin(false);
 			setOpenSignup(false);
 			setButtonText('Logout');
+			setbuttonColor('');
 		}
 	};
 
@@ -109,7 +115,7 @@ export default function NavBar(props) {
 									<Typography variant='subtitle1'>Explore Recipes</Typography>
 								</Link>
 							</Box>
-							{props.isLoggedIn && (
+							{props.token && (
 								<Box marginRight={4}>
 									<Link
 										to='/myrecipes'
@@ -125,23 +131,43 @@ export default function NavBar(props) {
 							display='flex'
 							justifyContent='flex-end'
 							marginLeft={12}
+							alignItems='center'
 						>
-							<Box justifySelf='right'>
+							<Box mr={2}>
+								<Typography color='textSecondary' variant='subtitle1'>
+									{localStorage.getItem('username')}
+								</Typography>
+							</Box>
+							<Box justifySelf='right' mr={2}>
 								<Button
 									type='button'
+									variant='outlined'
 									onClick={handleOpenLogin}
-									style={{ color: 'black', textDecoration: 'none' }}
+									style={{
+										borderColor: buttonColor,
+										color: buttonColor,
+										textDecoration: 'none',
+									}}
 								>
 									<Typography variant='subtitle1'>{buttonText}</Typography>
 								</Button>
+
 								<Modal
 									open={openLogin}
 									onSubmit={handleClose}
 									onBackdropClick={() => setOpenLogin(false)}
+									style={{
+										width: '100vw',
+										height: '100vh',
+										display: 'flex',
+										alignItems: 'center',
+										justifyContent: 'center',
+									}}
 								>
 									<Login
 										token={props.token}
 										updateToken={props.updateToken}
+										updateUsername={props.updateUsername}
 										setIsLoggedIn={props.setIsLoggedIn}
 									/>
 								</Modal>
@@ -149,9 +175,10 @@ export default function NavBar(props) {
 						</Box>
 						<Box>
 							<Box justifySelf='right'>
-								{!props.isLoggedIn && (
+								{!props.token && (
 									<Button
 										type='button'
+										variant='outlined'
 										onClick={handleOpenSignup}
 										style={{ color: 'black', textDecoration: 'none' }}
 									>
@@ -163,10 +190,18 @@ export default function NavBar(props) {
 									open={openSignup}
 									onSubmit={handleClose}
 									onBackdropClick={() => setOpenSignup(false)}
+									style={{
+										width: '100vw',
+										height: '100vh',
+										display: 'flex',
+										alignItems: 'center',
+										justifyContent: 'center',
+									}}
 								>
 									<Signup
 										token={props.token}
 										updateToken={props.updateToken}
+										updateUsername={props.updateUsername}
 										setIsLoggedIn={props.setIsLoggedIn}
 									/>
 								</Modal>

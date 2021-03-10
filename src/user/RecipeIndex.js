@@ -63,33 +63,7 @@ const RecipeIndex = (props) => {
 
 	return (
 		<div>
-			<Box
-				display='flex'
-				flexDirection='row'
-				alignItems='center'
-				justifyContent='space-between'
-			>
-				<Box>
-					<Typography variant='h2' color='textPrimary'>
-						My Recipes
-					</Typography>
-				</Box>
-				<Box>
-					<Button
-						variant='contained'
-						color='primary'
-						style={{ backgroundColor: '#FF8F00' }}
-						onClick={handleClick}
-					>
-						{buttonText}
-					</Button>
-					{show ? (
-						<RecipeCreate fetchRecipes={fetchRecipes} token={props.token} />
-					) : (
-						<></>
-					)}
-				</Box>
-			</Box>
+			<RecipeCreate fetchRecipes={fetchRecipes} token={props.token} />
 			<Grid container direction='row' spacing={2}>
 				<RecipeCard
 					recipes={recipes}
