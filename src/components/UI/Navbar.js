@@ -26,7 +26,6 @@ import ChefRecipes from '../Recipes/ChefRecipes';
 
 export default function NavBar(props) {
 	const [buttonColor, setbuttonColor] = useState('#FF9003');
-	const [textColor, setTextColor] = useState('white');
 
 	function Home() {
 		return <AllRecipes />;

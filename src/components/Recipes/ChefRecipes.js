@@ -60,6 +60,7 @@ function ChefRecipes(props) {
 				flexDirection='row'
 				alignItems='center'
 				justifyContent='space-between'
+				mb={2}
 			>
 				<Box>
 					<Typography variant='h2' color='textPrimary'>
