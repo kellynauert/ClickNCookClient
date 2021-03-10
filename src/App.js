@@ -4,11 +4,14 @@ import React, { useState, useEffect } from 'react';
 
 function App() {
 	const [sessionToken, setSessionToken] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const [sessionUsername, setSessionUsername] = useState('');
+
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
 
 	useEffect(() => {
 		if (localStorage.getItem('token')) {
 			setSessionToken(localStorage.getItem('token'));
+			setSessionUsername(localStorage.getItem('username'));
 		}
 	}, []);
 
@@ -17,11 +20,17 @@ function App() {
 		setSessionToken(newToken);
 		console.log(sessionToken);
 	};
+	const updateUsername = (newUsername) => {
+		localStorage.setItem('username', newUsername);
+		setSessionUsername(newUsername);
+	};
 
 	const clearToken = () => {
 		localStorage.clear();
 		setSessionToken('');
-    setIsLoggedIn(false)
+		setSessionUsername('');
+
+		setIsLoggedIn(false);
 	};
 
 	return (
@@ -30,8 +39,9 @@ function App() {
 				token={sessionToken}
 				updateToken={updateToken}
 				logout={clearToken}
-        setIsLoggedIn={setIsLoggedIn}
-        isLoggedIn={isLoggedIn}
+				setIsLoggedIn={setIsLoggedIn}
+				isLoggedIn={isLoggedIn}
+				updateUsername={updateUsername}
 			/>
 		</>
 	);

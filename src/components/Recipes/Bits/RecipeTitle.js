@@ -1,24 +1,8 @@
 import { Grid, Chip, Box, Typography } from '@material-ui/core';
-import Icon from '@mdi/react';
 import { spacing } from '@material-ui/system';
 import { Link } from 'react-router-dom';
-
-import { mdiCupcake, mdiFoodTurkey, mdiPizza, mdiCoffee } from '@mdi/js';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 function RecipeTitle(props) {
-	const [icon, setIcon] = useState();
-	useEffect(() => {
-		if (props.category == 'Dessert') {
-			setIcon(<Icon path={mdiCupcake} size={0.7} />);
-		} else if (props.category == 'Dinner') {
-			setIcon(<Icon path={mdiFoodTurkey} size={0.7} />);
-		} else if (props.category == 'Breakfast') {
-			setIcon(<Icon path={mdiCoffee} size={0.7} />);
-		} else if (props.category == 'Lunch') {
-			setIcon(<Icon path={mdiPizza} size={0.7} />);
-		}
-	}, [props.category]);
-
 	return (
 		<Grid container direction='row' className='RecipeHeaderBits'>
 			<Box>
@@ -27,14 +11,6 @@ function RecipeTitle(props) {
 						<Typography variant='h2' color='textPrimary' component='h2'>
 							{props.recipeName}
 						</Typography>
-					</Box>
-					<Box>
-						<Chip
-							icon={icon}
-							style={{ backgroundColor: '#FF8F00' }}
-							color='primary'
-							label={props.category}
-						/>
 					</Box>
 				</Grid>
 				<Box className='username'>

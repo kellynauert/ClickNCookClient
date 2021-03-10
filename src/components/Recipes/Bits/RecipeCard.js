@@ -5,11 +5,19 @@ import {
 	Box,
 	Grid,
 	CardMedia,
+	Chip,
+	Paper,
 } from '@material-ui/core/';
 import {
 	mdiClockTimeTwoOutline,
 	mdiBasketOutline,
 	mdiBowlMixOutline,
+	mdiEye,
+	mdiStarShooting,
+	mdiCupcake,
+	mdiFoodTurkey,
+	mdiPizza,
+	mdiCoffee,
 } from '@mdi/js';
 import Icon from '@mdi/react';
 import { Link } from 'react-router-dom';
@@ -25,20 +33,104 @@ function RecipeCard(props) {
 	const [image, setImage] = useState(
 		'http://miro.medium.com/max/1080/0*DqHGYPBA-ANwsma2.gif'
 	);
+	const [icon, setIcon] = useState();
+
+	useEffect(() => {
+		if (props.recipe.category == 'Dessert') {
+			setIcon(
+				<Icon path={mdiCupcake} size={0.8} style={{ marginRight: '8px' }} />
+			);
+		} else if (props.recipe.category == 'Dinner') {
+			setIcon(
+				<Icon path={mdiFoodTurkey} size={0.8} style={{ marginRight: '8px' }} />
+			);
+		} else if (props.recipe.category == 'Breakfast') {
+			setIcon(
+				<Icon path={mdiCoffee} size={0.8} style={{ marginRight: '8px' }} />
+			);
+		} else if (props.recipe.category == 'Lunch') {
+			setIcon(
+				<Icon path={mdiPizza} size={0.8} style={{ marginRight: '8px' }} />
+			);
+		}
+	}, [props]);
 
 	return (
 		<Grid item xs={12} md={6} lg={4}>
 			<Link
-				to={`./singlerecipe/${props.recipe.id}`}
+				to={`/singlerecipe/${props.recipe.id}`}
 				style={{ textDecoration: 'none' }}
 			>
-				<Card elevation={2}>
-					<CardMedia image={image} style={{ height: '20vh' }} />
+				<Card elevation={2} style={{}}>
+					<CardMedia
+						image={image}
+						style={{ height: '25vh', position: 'relative' }}
+					>
+						<Paper
+							style={{
+								backgroundColor: 'rgba(255,255,255,.8)',
+								color: 'rgba(0, 0, 0, 0.54)',
+								borderRadius: '4px',
+								margin: '16px',
+								position: 'absolute',
+								display: 'flex',
+								alignItems: 'center',
+								padding: '4px 16px 4px 12px',
+							}}
+							elevation={0}
+						>
+							{icon}
+							<Typography variant='body1' color='textSecondary'>
+								{props.recipe.category}
+							</Typography>
+						</Paper>
+						<Paper
+							style={{
+								backgroundColor: 'rgba(255,255,255,.8)',
+								margin: '16px',
+								position: 'absolute',
+								right: '0',
+								borderRadius: '100px',
+								display: 'flex',
+								alignItems: 'center',
+								flexDirection: 'column',
+								width: '20px',
+								padding: '8px',
+							}}
+							elevation={0}
+						>
+							{props.recipe.views > props.spicyViews ? (
+								<Icon
+									path={mdiStarShooting}
+									style={{
+										height: '100% !important',
+										width: '100% !important',
+										color: '#2979ff',
+									}}
+								/>
+							) : (
+								<Icon
+									path={mdiEye}
+									style={{
+										height: '100% !important',
+										width: '100% !important',
+										color: 'black',
+										opacity: '.5',
+									}}
+								/>
+							)}
+							<Typography variant='subtitle2' color='textSecondary'>
+								{props.recipe.views}
+							</Typography>
+						</Paper>
+					</CardMedia>
 					<CardContent>
 						<RecipeCardTitle
 							recipeName={props.recipe.recipe_name}
 							chef={props.recipe.chef}
 							category={props.recipe.category}
+							views={props.recipe.views}
+							spicyViews={props.spicyViews}
 						/>
 
 						<Box
@@ -58,6 +150,7 @@ function RecipeCard(props) {
 									{props.recipe.cook_time} min.
 								</Typography>
 							</Box>
+
 							<Box alignItems='center' display='flex' flexDirection='row'>
 								<Icon
 									path={mdiBasketOutline}
