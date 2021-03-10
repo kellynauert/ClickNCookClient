@@ -58,7 +58,7 @@ function RecipeCard(props) {
 	return (
 		<Grid item xs={12} md={6} lg={4}>
 			<Link
-				to={`./singlerecipe/${props.recipe.id}`}
+				to={`/singlerecipe/${props.recipe.id}`}
 				style={{ textDecoration: 'none' }}
 			>
 				<Card elevation={2} style={{}}>
@@ -68,8 +68,8 @@ function RecipeCard(props) {
 					>
 						<Paper
 							style={{
-								backgroundColor: 'rgba(255,255,255,1)',
-								color: '#FF8F00',
+								backgroundColor: 'rgba(255,255,255,.8)',
+								color: 'rgba(0, 0, 0, 0.54)',
 								borderRadius: '4px',
 								margin: '16px',
 								position: 'absolute',
@@ -80,11 +80,13 @@ function RecipeCard(props) {
 							elevation={0}
 						>
 							{icon}
-							<Typography variant='body1'>{props.recipe.category}</Typography>
+							<Typography variant='body1' color='textSecondary'>
+								{props.recipe.category}
+							</Typography>
 						</Paper>
 						<Paper
 							style={{
-								backgroundColor: 'rgba(255,255,255,.75)',
+								backgroundColor: 'rgba(255,255,255,.8)',
 								margin: '16px',
 								position: 'absolute',
 								right: '0',
