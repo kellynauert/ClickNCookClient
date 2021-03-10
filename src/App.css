@@ -36,18 +36,6 @@
 		transform: rotate(360deg);
 	}
 }
-.RecipeHeaderBits h1,
-h4 {
-	margin: 0px;
-}
-.RecipeHeaderBits h4 {
-	font-weight: 700;
-	padding-bottom: 0px;
-}
-.MuiGrid-container {
-	width: 100% !important;
-	margin: 0 !important;
-}
 
 .container {
 	width: 70vw;

@@ -159,13 +159,50 @@ function SingleRecipe(props) {
 				<Box>
 					<RecipeTitle recipeName={recipe.recipe_name} chef={recipe.chef} />
 				</Box>
-				<Box pt={3}>
-					<DisplayHeaderAndText header='Servings:' value={recipe.servings} />
-					<DisplayHeaderAndText
-						header='Cooking Time:'
-						value={`${recipe.cook_time} minutes`}
-					/>
+
+				<Box
+					display='flex'
+					flexDirection='column'
+					mt={2}
+					justifyContent='space-between'
+				>
+					<Box alignItems='center' display='flex' flexDirection='row'>
+						<Icon
+							path={mdiClockTimeTwoOutline}
+							size={0.7}
+							style={{ marginRight: '8px' }}
+						/>
+						<Typography variant='subtitle1' color='textPrimary'>
+							{recipe.cook_time} min.
+						</Typography>
+					</Box>
+
+					<Box alignItems='center' display='flex' flexDirection='row'>
+						<Icon
+							path={mdiBasketOutline}
+							size={0.7}
+							style={{ marginRight: '8px' }}
+						/>
+
+						{recipe.ingredients ? (
+							<Typography variant='subtitle1' color='textPrimary'>
+								{' '}
+								{recipe.ingredients.length} items{' '}
+							</Typography>
+						) : null}
+					</Box>
+					<Box alignItems='center' display='flex' flexDirection='row'>
+						<Icon
+							path={mdiBowlMixOutline}
+							size={0.7}
+							style={{ marginRight: '8px' }}
+						/>
+						<Typography variant='subtitle1' color='textPrimary'>
+							{recipe.servings} servings
+						</Typography>
+					</Box>
 				</Box>
+
 				<CheckboxList
 					ingredients={recipe.ingredients ? recipe.ingredients : ['']}
 				/>
