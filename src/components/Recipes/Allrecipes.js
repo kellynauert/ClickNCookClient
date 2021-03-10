@@ -11,6 +11,8 @@ import {
 import RecipeCard from './Bits/RecipeCard';
 import StarRateIcon from '@material-ui/icons/StarRate';
 import APIURL from '../../helpers/environment';
+import { mdiStarShooting } from '@mdi/js';
+import Icon from '@mdi/react';
 
 const useStyles = makeStyles({
 	filter: {
@@ -23,12 +25,16 @@ function AllRecipes() {
 	const classes = useStyles();
 	const [recipe, setRecipe] = useState([]);
 	const [spicy, setSpicy] = useState(false);
+	const [spicyViews, setSpicyViews] = useState();
 	const [filterCategory, setFilterCategory] = useState('');
 
 	useEffect(() => {
 		getAllRecipes();
-		// console.log(recipe);
 	}, []);
+
+	useEffect(() => {
+		findValues();
+	});
 
 	function getAllRecipes() {
 		fetch(`${APIURL}/recipe/`, {
@@ -43,14 +49,23 @@ function AllRecipes() {
 				console.log(recipe);
 			});
 	}
-
+	function findValues() {
+		let views = [];
+		recipe.forEach((x) => views.push(x.views));
+		console.log(views);
+		let maxViews = Math.max(...views);
+		setSpicyViews(maxViews * 0.7);
+		console.log(spicyViews);
+	}
 	const RecipeMapper = () => {
 		return recipe
 			.filter(
 				(recipe) => filterCategory === recipe.category || filterCategory === ''
 			)
 			.map((recipe, index) => {
-				return <RecipeCard key={index} recipe={recipe} />;
+				return (
+					<RecipeCard key={index} recipe={recipe} spicyViews={spicyViews} />
+				);
 			});
 	};
 
@@ -101,13 +116,19 @@ function AllRecipes() {
 					<Button
 						variant='outlined'
 						color='secondary'
-						startIcon={<StarRateIcon />}
+						startIcon={
+							<Icon
+								path={mdiStarShooting}
+								size={1}
+								style={{ marginLeft: '8px', color: '#2979ff' }}
+							/>
+						}
 						onClick={() => setSpicy(!spicy)}
 						style={{
 							marginRight: '16px',
 							padding: '15px',
-							borderColor: '#FF8F00',
-							color: '#FF8F00',
+							borderColor: '#2979ff',
+							color: '#2979ff',
 						}}
 					>
 						Spicy Recipes

@@ -6,6 +6,8 @@ import {
 	MenuItem,
 	TextareaAutosize,
 	CssBaseline,
+	Box,
+	Paper,
 } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
@@ -20,16 +22,6 @@ const useStyles = makeStyles((theme) => ({
 			width: '25ch',
 		},
 	},
-	paper: {
-		marginTop: theme.spacing(8),
-		display: 'flex',
-		flexDirection: 'column',
-		alignItems: 'center',
-	},
-	form: {
-		width: '100%', // Fix IE 11 issue.
-		marginTop: theme.spacing(3),
-	},
 	submit: {
 		margin: theme.spacing(3, 0, 2),
 	},
@@ -42,8 +34,7 @@ const RecipeCreate = (props) => {
 	const classes = useStyles();
 	const [recipeName, setRecipeName] = useState('');
 	const [category, setCategory] = useState('');
-	const [ingredient, setIngredient] = useState('');
-	const [ingredients, setIngredients] = useState([]);
+	const [ingredients, setIngredients] = useState('');
 	const [directions, setDirections] = useState('');
 	const [cookTime, setCookTime] = useState(0);
 	const [servings, setServings] = useState(0);
@@ -72,11 +63,12 @@ const RecipeCreate = (props) => {
 			}),
 		})
 			.then((res) => res.json())
+			.then(() => setOpenCreate(false))
+
 			.then((logData) => {
 				console.log(logData);
 				setRecipeName('');
 				setCategory('');
-				setIngredient('');
 				setIngredients([]);
 				setDirections('');
 				setCookTime(0);
@@ -88,134 +80,173 @@ const RecipeCreate = (props) => {
 	};
 
 	const split = ({ target }) => {
-		setIngredient(target.value);
-		let result = ingredient.split(',');
-		setIngredients(result);
+		setIngredients(target.value.split(','));
+	};
+	const [openCreate, setOpenCreate] = useState(false);
+	const handleOpenCreate = () => {
+		setOpenCreate(true);
 	};
 
 	return (
-		<Container component='main' maxWidth='xs'>
-			<CssBaseline />
-			<div className={classes.paper}>
-				<Typography component='h2' variant='h5'>
-					Create Recipe
-				</Typography>
-				<form className={classes.form} onSubmit={handleSubmit}>
-					<Grid conatainer spacing={2}>
-						<Grid item xs={12}>
-							<TextField
-								variant='outlined'
-								required
-								fullWidth
-								id='recipe-name'
-								label='Recipe Name'
-								autoFocus
-								value={recipeName}
-								onChange={(e) => setRecipeName(e.target.value)}
-							/>
-						</Grid>
-						<br />
-						<Grid item xs={12}>
-							<TextField
-								select
-								variant='outlined'
-								required
-								fullWidth
-								id='catecgory'
-								label='Category'
-								value={category}
-								onChange={(e) => setCategory(e.target.value)}
-							>
-								<MenuItem value='' disabled>
-									select
-								</MenuItem>
-								<MenuItem value='Breakfast'>Breakfast</MenuItem>
-								<MenuItem value='Lunch'>Lunch</MenuItem>
-								<MenuItem value='Dinner'>Dinner</MenuItem>
-								<MenuItem value='Dessert'>Dessert</MenuItem>
-							</TextField>
-						</Grid>
-						<br />
-						<Grid item xs={12}>
-							<TextField
-								variant='outlined'
-								required
-								fullWidth
-								id='ingredients'
-								label='Ingredients'
-								helperText='Seperate ingredients with a , and after last ingredient'
-								autoFocus
-								value={ingredient}
-								onChange={split}
-							/>
-						</Grid>
-						<br />
-						<Grid item xs={12}>
-							<TextareaAutosize
-								rowsMin={5}
-								rowsMax={10}
-								variant='outlined'
-								required
-								fullWidth
-								id='directions'
-								placeholder='Directions*'
-								value={directions}
-								onChange={(e) => setDirections(e.target.value)}
-							/>
-						</Grid>
-						<br />
-						<Grid item xs={12}>
-							<TextField
-								variant='outlined'
-								required
-								fullWidth
-								type='number'
-								id='cook-time'
-								label='Cook Time'
-								autoFocus
-								value={cookTime}
-								onChange={(e) => setCookTime(e.target.value)}
-							/>
-						</Grid>
-						<br />
-						<Grid item xs={12}>
-							<TextField
-								variant='outlined'
-								required
-								fullWidth
-								type='number'
-								id='servings'
-								label='Servings'
-								autoFocus
-								value={servings}
-								onChange={(e) => setServings(e.target.value)}
-							/>
-						</Grid>
-						<br />
-						<Grid item xs={12}>
-							<TextField
-								variant='outlined'
-								fullWidth
-								id='image'
-								label='Image URL'
-								helperText='Enter URL of image'
-								value={imgUrl}
-								onChange={(e) => setImgUrl(e.target.value)}
-							/>
-						</Grid>
-						<Button
-							type='submit'
-							fullWidth
-							variant='contained'
-							color='primary'
-							className={classes.submit}
-						>
-							Create
-						</Button>
-					</Grid>
-				</form>
-			</div>
-		</Container>
+		<>
+			<Box
+				display='flex'
+				flexDirection='row'
+				alignItems='center'
+				justifyContent='space-between'
+			>
+				<Box>
+					<Typography variant='h2' color='textPrimary'>
+						My Recipes
+					</Typography>
+				</Box>
+				<Box>
+					<Button
+						variant='contained'
+						color='primary'
+						style={{ backgroundColor: '#FF8F00' }}
+						onClick={handleOpenCreate}
+					>
+						Create Recipe
+					</Button>
+				</Box>
+			</Box>
+
+			<Modal
+				open={openCreate}
+				onBackdropClick={() => setOpenCreate(false)}
+				style={{
+					width: '100vw',
+					height: '100vh',
+					display: 'flex',
+					alignItems: 'center',
+					justifyContent: 'center',
+				}}
+			>
+				<Grid container item md={6} xs={12} spacing={2}>
+					<Paper style={{ padding: '16px' }} elevation={8}>
+						<form container className={classes.form} onSubmit={handleSubmit}>
+							<Grid container spacing={2}>
+								<Grid item xs={12}>
+									<Typography variant='h4'>Create Recipe</Typography>
+								</Grid>
+								<Grid item xs={12}>
+									<TextField
+										variant='outlined'
+										required
+										fullWidth
+										id='recipe-name'
+										label='Recipe Name'
+										autoFocus
+										value={recipeName}
+										onChange={(e) => setRecipeName(e.target.value)}
+									/>
+								</Grid>
+								<br />
+								<Grid item xs={12}>
+									<TextField
+										select
+										variant='outlined'
+										required
+										fullWidth
+										id='catecgory'
+										label='Category'
+										value={category}
+										onChange={(e) => setCategory(e.target.value)}
+									>
+										<MenuItem value='' disabled>
+											select
+										</MenuItem>
+										<MenuItem value='Breakfast'>Breakfast</MenuItem>
+										<MenuItem value='Lunch'>Lunch</MenuItem>
+										<MenuItem value='Dinner'>Dinner</MenuItem>
+										<MenuItem value='Dessert'>Dessert</MenuItem>
+									</TextField>
+								</Grid>
+								<br />
+								<Grid item xs={12}>
+									<TextField
+										variant='outlined'
+										required
+										fullWidth
+										id='ingredients'
+										label='Ingredients'
+										helperText='Seperate ingredients with a , and after last ingredient'
+										autoFocus
+										value={ingredients}
+										onChange={split}
+									/>
+								</Grid>
+								<br />
+								<Grid item xs={12}>
+									<TextField
+										multiline
+										rows='8'
+										variant='outlined'
+										required
+										fullWidth
+										id='directions'
+										placeholder='Directions*'
+										value={directions}
+										onChange={(e) => setDirections(e.target.value)}
+									/>
+								</Grid>
+								<br />
+								<Grid item xs={12}>
+									<TextField
+										variant='outlined'
+										required
+										fullWidth
+										type='number'
+										id='cook-time'
+										label='Cook Time'
+										autoFocus
+										value={cookTime}
+										onChange={(e) => setCookTime(e.target.value)}
+									/>
+								</Grid>
+								<br />
+								<Grid item xs={12}>
+									<TextField
+										variant='outlined'
+										required
+										fullWidth
+										type='number'
+										id='servings'
+										label='Servings'
+										autoFocus
+										value={servings}
+										onChange={(e) => setServings(e.target.value)}
+									/>
+								</Grid>
+								<br />
+								<Grid item xs={12}>
+									<TextField
+										variant='outlined'
+										style={{ borderColor: '#FF9003 !important' }}
+										fullWidth
+										id='image'
+										label='Image URL'
+										helperText='Enter URL of image'
+										value={imgUrl}
+										onChange={(e) => setImgUrl(e.target.value)}
+									/>
+								</Grid>
+								<Button
+									type='submit'
+									fullWidth
+									variant='contained'
+									style={{ backgroundColor: '#FF9003', color: 'white' }}
+									className={classes.submit}
+								>
+									Create
+								</Button>
+							</Grid>
+						</form>
+					</Paper>
+				</Grid>
+			</Modal>
+		</>
 	);
 };
 
