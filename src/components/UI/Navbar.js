@@ -35,10 +35,6 @@ export default function NavBar(props) {
 		return props.token ? <RecipeIndex token={props.token} /> : <>My Recipes</>;
 	}
 
-	function SingleRecipePath() {
-		let { id } = useParams();
-		return <SingleRecipe recipeID={id} />;
-	}
 	function AuthPath() {
 		return (
 			<Auth
@@ -52,13 +48,7 @@ export default function NavBar(props) {
 		let { id } = useParams();
 		return <ChefRecipes chef={id} />;
 	}
-	const protectedViews = () => {
-		return props.sessionToken === localStorage.getItem('token') ? (
-			<RecipeIndex token={props.token} />
-		) : (
-			<Auth token={props.sessionToken} updateToken={props.updateToken} />
-		);
-	};
+
 	const [openSignup, setOpenSignup] = useState(false);
 	const [openLogin, setOpenLogin] = useState(false);
 	const [buttonText, setButtonText] = useState('Login');
@@ -215,15 +205,15 @@ export default function NavBar(props) {
 					<Route path='/myrecipes'>
 						<MyRecipes />
 					</Route>
-					<Route path='/singlerecipe/:id'>
-						<SingleRecipePath />
-					</Route>
+					<Route path='/singlerecipe/:id' children={<SingleRecipe />} />
+					{/* <SingleRecipePath />
+					</Route> */}
 					<Route exact path='/'>
 						<Home />
 					</Route>
-					<Route path='/chef/:id'>
-						<ChefRecipesPath />
-					</Route>
+					<Route path='/chef/:id' children={<ChefRecipes />} />
+					{/* <ChefRecipesPath />
+					</Route> */}
 					<Route path='/auth'>
 						<AuthPath />
 					</Route>

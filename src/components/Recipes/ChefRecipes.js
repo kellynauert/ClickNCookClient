@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import {
-	Card,
-	CardHeader,
-	CardContent,
 	Typography,
 	Box,
 	Grid,
@@ -12,17 +9,17 @@ import {
 } from '@material-ui/core/';
 import RecipeCard from './Bits/RecipeCard';
 import APIURL from '../../helpers/environment';
-
+import { useParams } from 'react-router-dom';
 const useStyles = makeStyles({
 	filter: {
 		width: '190px',
 	},
 });
-
 function ChefRecipes(props) {
 	const classes = useStyles();
 	let [recipe, setRecipe] = useState([]);
 	const [filterCategory, setFilterCategory] = useState('');
+	let { id } = useParams();
 
 	useEffect(() => {
 		getAllRecipes();
@@ -30,7 +27,7 @@ function ChefRecipes(props) {
 	}, []);
 
 	function getAllRecipes() {
-		fetch(`${APIURL}/recipe/${props.chef}`, {
+		fetch(`${APIURL}/recipe/${id}`, {
 			method: 'GET',
 			headers: new Headers({
 				'Content-Type': 'application/json',
@@ -64,7 +61,7 @@ function ChefRecipes(props) {
 			>
 				<Box>
 					<Typography variant='h2' color='textPrimary'>
-						{props.chef}'s Recipes
+						{id}'s Recipes
 					</Typography>
 				</Box>
 				<Box>

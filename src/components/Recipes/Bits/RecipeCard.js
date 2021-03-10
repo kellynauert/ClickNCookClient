@@ -5,7 +5,6 @@ import {
 	Box,
 	Grid,
 	CardMedia,
-	Chip,
 	Paper,
 } from '@material-ui/core/';
 import {

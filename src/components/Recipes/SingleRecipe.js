@@ -7,8 +7,6 @@ import {
 	Typography,
 } from '@material-ui/core';
 import Icon from '@mdi/react';
-
-import DisplayHeaderAndText from './Bits/DisplayHeaderAndText';
 import RecipeTitle from './Bits/RecipeTitle';
 import CheckboxList from './Bits/Ingredients';
 import Directions from './Bits/Directions';
@@ -16,7 +14,7 @@ import React, { useEffect, useState } from 'react';
 import StopWatchApp from './Bits/StopWatchApp';
 import { spacing } from '@material-ui/system';
 import APIURL from '../../helpers/environment';
-import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import {
 	mdiClockTimeTwoOutline,
 	mdiBasketOutline,
@@ -30,15 +28,21 @@ import {
 } from '@mdi/js';
 
 function SingleRecipe(props) {
+	let { id } = useParams();
 	const [recipe, setRecipe] = useState('');
+	const [fetchingRecipe, setFetchingRecipe] = useState(false);
 
 	useEffect(() => {
-		fetchRecipes();
+		if (!recipe && !fetchingRecipe) {
+			console.log(`hi ${fetchingRecipe}`);
+			setFetchingRecipe(true);
+			fetchRecipes();
+		}
 	}, []);
+
 	function fetchRecipes() {
 		console.log(props);
-
-		fetch(`${APIURL}/recipe/id/${props.recipeID}`, {
+		fetch(`${APIURL}/recipe/id/${id}`, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
