@@ -4,30 +4,29 @@ import Modal from '@material-ui/core/Modal';
 import {
 	TextField,
 	MenuItem,
-	TextareaAutosize,
-	CssBaseline,
 	Box,
 	Paper,
+	Button,
+	InputAdornment,
+	Typography,
+	Grid,
 } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
-import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
+
 import APIURL from '../helpers/environment';
 
 const useStyles = makeStyles((theme) => ({
-	root: {
-		'& > *': {
-			margin: theme.spacing(1),
-			width: '25ch',
-		},
-	},
-	submit: {
-		margin: theme.spacing(3, 0, 2),
-	},
-	textArea: {
-		display: 'block',
-	},
+	// root: {
+	// 	'& > *': {
+	// 		margin: theme.spacing(1),
+	// 		width: '25ch',
+	// 	},
+	// },
+	// submit: {
+	// 	margin: theme.spacing(3, 0, 2),
+	// },
+	// textArea: {
+	// 	display: 'block',
+	// },
 }));
 
 const RecipeCreate = (props) => {
@@ -94,6 +93,7 @@ const RecipeCreate = (props) => {
 				flexDirection='row'
 				alignItems='center'
 				justifyContent='space-between'
+				flexWrap='wrap'
 				mb={2}
 			>
 				<Box>
@@ -101,7 +101,7 @@ const RecipeCreate = (props) => {
 						My Recipes
 					</Typography>
 				</Box>
-				<Box>
+				<Box mt={1}>
 					<Button
 						variant='contained'
 						color='primary'
@@ -131,7 +131,7 @@ const RecipeCreate = (props) => {
 								<Grid item xs={12}>
 									<Typography variant='h4'>Create Recipe</Typography>
 								</Grid>
-								<Grid item xs={12}>
+								<Grid item md={6} xs={8}>
 									<TextField
 										variant='outlined'
 										required
@@ -143,8 +143,8 @@ const RecipeCreate = (props) => {
 										onChange={(e) => setRecipeName(e.target.value)}
 									/>
 								</Grid>
-								<br />
-								<Grid item xs={12}>
+
+								<Grid item xl={2} md={6} xs={4}>
 									<TextField
 										select
 										variant='outlined'
@@ -164,36 +164,7 @@ const RecipeCreate = (props) => {
 										<MenuItem value='Dessert'>Dessert</MenuItem>
 									</TextField>
 								</Grid>
-								<br />
-								<Grid item xs={12}>
-									<TextField
-										variant='outlined'
-										required
-										fullWidth
-										id='ingredients'
-										label='Ingredients'
-										helperText='Seperate ingredients with a , and after last ingredient'
-										autoFocus
-										value={ingredients}
-										onChange={split}
-									/>
-								</Grid>
-								<br />
-								<Grid item xs={12}>
-									<TextField
-										multiline
-										rows='8'
-										variant='outlined'
-										required
-										fullWidth
-										id='directions'
-										placeholder='Directions*'
-										value={directions}
-										onChange={(e) => setDirections(e.target.value)}
-									/>
-								</Grid>
-								<br />
-								<Grid item xs={12}>
+								<Grid item xl={2} xs={6}>
 									<TextField
 										variant='outlined'
 										required
@@ -202,12 +173,17 @@ const RecipeCreate = (props) => {
 										id='cook-time'
 										label='Cook Time'
 										autoFocus
+										InputProps={{
+											endAdornment: (
+												<InputAdornment position='end'>mins</InputAdornment>
+											),
+										}}
 										value={cookTime}
 										onChange={(e) => setCookTime(e.target.value)}
 									/>
 								</Grid>
-								<br />
-								<Grid item xs={12}>
+
+								<Grid item xl={2} xs={6}>
 									<TextField
 										variant='outlined'
 										required
@@ -220,8 +196,36 @@ const RecipeCreate = (props) => {
 										onChange={(e) => setServings(e.target.value)}
 									/>
 								</Grid>
-								<br />
 								<Grid item xs={12}>
+									<TextField
+										variant='outlined'
+										required
+										fullWidth
+										id='ingredients'
+										label='Ingredients'
+										helperText='Separate ingredients with a comma (,)'
+										autoFocus
+										value={ingredients}
+										onChange={split}
+									/>
+								</Grid>
+
+								<Grid item xs={12}>
+									<TextField
+										multiline
+										rows='8'
+										variant='outlined'
+										required
+										fullWidth
+										id='directions'
+										placeholder='Directions*'
+										helperText='Try using html!'
+										value={directions}
+										onChange={(e) => setDirections(e.target.value)}
+									/>
+								</Grid>
+
+								<Grid item sm={12}>
 									<TextField
 										variant='outlined'
 										style={{ borderColor: '#FF9003 !important' }}
@@ -233,15 +237,17 @@ const RecipeCreate = (props) => {
 										onChange={(e) => setImgUrl(e.target.value)}
 									/>
 								</Grid>
-								<Button
-									type='submit'
-									fullWidth
-									variant='contained'
-									style={{ backgroundColor: '#FF9003', color: 'white' }}
-									className={classes.submit}
-								>
-									Create
-								</Button>
+								<Grid item sm={12}>
+									<Button
+										type='submit'
+										fullWidth
+										variant='contained'
+										style={{ backgroundColor: '#FF9003', color: 'white' }}
+										className={classes.submit}
+									>
+										Create
+									</Button>
+								</Grid>
 							</Grid>
 						</form>
 					</Paper>

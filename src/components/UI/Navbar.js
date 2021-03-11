@@ -84,7 +84,7 @@ export default function NavBar(props) {
 		<Router>
 			<AppBar
 				position='sticky'
-				style={{ width: '100vw', backgroundColor: 'white' }}
+				style={{ width: '100%', backgroundColor: 'white' }}
 			>
 				<Box className='container'>
 					<Toolbar style={{ padding: '0' }}>

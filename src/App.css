@@ -36,11 +36,24 @@
 		transform: rotate(360deg);
 	}
 }
-
-.container {
-	width: 70vw;
-	margin-left: 15vw;
+@media (min-width: 768px) {
+	.container {
+		width: 70vw;
+		margin-left: 15vw;
+	}
+	.menubutton {
+		display: none !important;
+	}
 }
+@media (max-width: 767px) {
+	.container {
+		width: 90vw;
+		margin-left: 5vw;
+	}
+	.menubutton {
+	}
+}
+
 .MuiAppBar-colorPrimary {
 	background-color: #ff8f00;
 }

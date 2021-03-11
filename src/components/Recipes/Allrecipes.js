@@ -34,7 +34,7 @@ function AllRecipes() {
 
 	useEffect(() => {
 		findValues();
-	});
+	}, [recipe]);
 
 	function getAllRecipes() {
 		fetch(`${APIURL}/recipe/`, {
